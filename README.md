@@ -20,6 +20,38 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## A note on /unison-components
+
+The _./unison-components_ directory is the Frame component library ([cllpse/unison-components](https://github.com/cllpse/unison-components)), included as a git submodule pinned to a specific commit. It is a React Native library rendered on web through React Native Web: `next.config.ts` prefers its `.web.*` files and aliases `react-native` to `react-native-web`. Only `.web.tsx / .web.ts` files are used here.
+
+#### Using /unison-components
+
+```jsx
+"use client";
+
+import { Frame } from "@unison-components/web";
+```
+
+React Native Web components use React context, so they must be rendered from a client component.
+
+#### Styling
+
+`bun run frame:css` (run automatically by `dev` and `build`) generates _src/app/frame.css_ from the library's tokens: its colors as Tailwind theme colors, and a safelist of the class names the library builds at runtime. Don't edit that file by hand.
+
+#### Updating
+
+Only move the submodule pointer when intentionally bumping the library:
+
+```sh
+cd unison-components && git fetch && git checkout origin/main && cd ..
+```
+
+If _./unison-components_ is empty, or to discard local changes inside it, reset it to the pinned commit:
+
+```sh
+git submodule update --recursive --init --force
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

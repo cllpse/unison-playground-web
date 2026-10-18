@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@unison-components/web": ["./unison-components/web"]
     }
   },
   "include": [

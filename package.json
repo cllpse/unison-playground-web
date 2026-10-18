@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "bun run frame:css && next dev",
+    "build": "bun run frame:css && next build",
+    "frame:css": "bun scripts/generate-frame-css.ts",
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write"
@@ -12,7 +13,8 @@
   "dependencies": {
     "next": "16.4.0",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "react-native-web": "^0.21.4"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.2",
@@ -21,6 +23,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
+    "react-native": "^0.87.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   },

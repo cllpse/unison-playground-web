@@ -8,7 +8,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-# unison-playground
+# unison-playground-web
 
 A small Next.js site for trying out the unison-components library on web.
 

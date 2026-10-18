@@ -31,7 +31,7 @@ React Native Web components use React context, so they must be rendered from a c
 
 #### Styling
 
-`bun run frame:css` (run automatically by `dev` and `build`) generates _src/app/frame.css_ from the library's tokens: its colors as Tailwind theme colors, and a safelist of the class names the library builds at runtime. Don't edit that file by hand.
+_src/app/globals.css_ imports the library's _tailwind.css_, which carries its colors as Tailwind theme colors and a safelist of the class names the library builds at runtime. The library generates and commits that file, so there is no build step here.
 
 #### Updating
 

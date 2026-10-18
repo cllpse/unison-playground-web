@@ -8,7 +8,8 @@
     "frame:css": "bun scripts/generate-frame-css.ts",
     "start": "next start",
     "lint": "biome check",
-    "format": "biome format --write"
+    "format": "biome format --write",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "next": "16.4.0",
@@ -17,7 +18,7 @@
     "react-native-web": "^0.21.4"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.2",
+    "@biomejs/biome": "2.5.15",
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -7,16 +7,7 @@ const nextConfig: NextConfig = {
     // The unison-components submodule is a React Native library rendered on web through
     // React Native Web: prefer its `.web.*` files and swap `react-native` for
     // `react-native-web`.
-    resolveExtensions: [
-      ".web.tsx",
-      ".web.ts",
-      ".tsx",
-      ".ts",
-      ".jsx",
-      ".js",
-      ".mjs",
-      ".json",
-    ],
+    resolveExtensions: [".web.tsx", ".web.ts", ".tsx", ".ts", ".jsx", ".js", ".mjs", ".json"],
     resolveAlias: {
       "react-native": "react-native-web",
     },
@@ -27,6 +18,6 @@ const nextConfig: NextConfig = {
       },
     },
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig

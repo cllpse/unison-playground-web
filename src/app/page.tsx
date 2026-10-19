@@ -1,6 +1,6 @@
 "use client"
 
-import { Frame, Text, Vector } from "@unison-components/web"
+import { Frame, Text, Vector } from "@unison"
 
 export default function Home() {
   return (

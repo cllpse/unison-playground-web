@@ -24,14 +24,14 @@ The _./unison-components_ directory is the Frame component library ([cllpse/unis
 ```jsx
 "use client";
 
-import { Frame } from "@unison-components/web";
+import { Frame } from "@unison";
 ```
 
 React Native Web components use React context, so they must be rendered from a client component.
 
 #### Styling
 
-_src/app/globals.css_ imports the library's _tailwind.css_, which carries its colors as Tailwind theme colors and a safelist of the class names the library builds at runtime. The library generates and commits that file, so there is no build step here.
+_src/app/globals.css_ imports the library's _dist/tailwind.css_, which carries its colors as Tailwind theme colors and a safelist of the class names the library builds at runtime. The library generates and commits that file, so there is no build step here.
 
 #### Updating
 

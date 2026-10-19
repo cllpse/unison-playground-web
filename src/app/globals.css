@@ -8,7 +8,7 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css";
-@import "../../unison-components/tailwind.css";
+@import "../../unison-components/dist/tailwind.css";
 
 /* Colors from Sites/web's tailwind.config.ts. Declared after the library's tailwind.css so,
    as in web, these win over the library's black, white and transparent.

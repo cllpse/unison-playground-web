@@ -1,556 +1,1364 @@
 "use client"
 
 import { Frame, Text, Vector } from "@unison"
+import type { ReactNode } from "react"
 
-export default function Home() {
+// Keep these sections in step with unison-playground-expo/App.tsx so web and native render the same cases.
+
+// A "more" icon (three dots) as Figma exports its path.
+const MORE_PATH =
+  "M1.25 2.5 C0.91 2.5 0.61 2.38 0.37 2.13 C0.12 1.89 0 1.59 0 1.25 C0 0.91 0.12 0.61 0.37 0.37 C0.61 0.12 0.91 0 1.25 0 C1.59 0 1.89 0.12 2.13 0.37 C2.38 0.61 2.5 0.91 2.5 1.25 C2.5 1.59 2.38 1.89 2.13 2.13 C1.89 2.38 1.59 2.5 1.25 2.5 Z M6.06 2.5 C5.71 2.5 5.42 2.38 5.18 2.13 C4.93 1.89 4.81 1.59 4.81 1.25 C4.81 0.91 4.93 0.61 5.18 0.37 C5.42 0.12 5.71 0 6.06 0 C6.4 0 6.7 0.12 6.94 0.37 C7.19 0.61 7.31 0.91 7.31 1.25 C7.31 1.59 7.19 1.89 6.94 2.13 C6.7 2.38 6.4 2.5 6.06 2.5 Z M10.87 2.5 C10.52 2.5 10.23 2.38 9.98 2.13 C9.74 1.89 9.62 1.59 9.62 1.25 C9.62 0.91 9.74 0.61 9.98 0.37 C10.23 0.12 10.52 0 10.87 0 C11.21 0 11.5 0.12 11.75 0.37 C11.99 0.61 12.12 0.91 12.12 1.25 C12.12 1.59 11.99 1.89 11.75 2.13 C11.5 2.38 11.21 2.5 10.87 2.5 Z"
+
+const LOREM =
+  "Frames compose like Figma auto layout: direction, sizing, padding and gap decide where every child lands, and text wraps inside whatever width its parent gives it."
+
+// Long enough to overflow a fill frame on any screen width, so the nowrap types always show their ellipsis.
+const LOREM_LONG = `${LOREM} ${LOREM} ${LOREM}`
+
+const Section = (p: { title: string; note: string; children?: ReactNode }) => {
   return (
-    <Frame
-      alignment-bottom-left
-      corner-radius-5
-      fill-white
-      flow-vertical
-      height-hug
-      padding-1px
-      stroke-neutralsurface-300
-    >
-      <Frame
-        alignment-left
-        flow-vertical
-        gap-2
-        height-hug
-        padding-top-2
-        width-fill
+    <Frame flow-vertical gap-2 height-hug width-fill>
+      <Text fill-text-800 typography-header-small-wrap>
+        {p.title}
+      </Text>
+      <Text fill-neutral-600 typography-body-small-wrap>
+        {p.note}
+      </Text>
+      <Frame corner-radius-3 fill-neutralsurface-100 flow-vertical gap-4 height-hug padding-4 width-fill>
+        {p.children}
+      </Frame>
+    </Frame>
+  )
+}
+
+const Case = (p: { label: string; children?: ReactNode }) => {
+  return (
+    <Frame flow-vertical gap-1 height-hug width-hug>
+      {p.children}
+      <Text fill-neutral-600 typography-label-small-nowrap>
+        {p.label}
+      </Text>
+    </Frame>
+  )
+}
+
+const Caption = (p: { children?: ReactNode }) => {
+  return (
+    <Text fill-neutral-600 typography-label-small-nowrap>
+      {p.children}
+    </Text>
+  )
+}
+
+export default () => {
+  return (
+    <Frame fill-white flow-vertical gap-10 height-hug padding-6 width-fill>
+      <Text fill-text-800 typography-display-wrap>
+        Frame and Text test suite
+      </Text>
+
+      <Section
+        title="1. Empty frames"
+        note="Fixed sizes and padding keep empty frames visible. The red hug frame has no children and should collapse to nothing."
       >
-        <Frame
-          alignment-left
-          flow-horizontal
-          gap-2
-          height-hug
-          padding-horizontal-2
-          width-fill
-        >
+        <Frame alignment-bottom-left flow-horizontal gap-4 height-hug width-fill wrap>
+          <Case label="12 x 12">
+            <Frame fill-primary-500 height-12 width-12 />
+          </Case>
+          <Case label="round">
+            <Frame corner-radius-full fill-secondary-500 height-12 width-12 />
+          </Case>
+          <Case label="padding-4">
+            <Frame fill-tertiary-500 padding-4 />
+          </Case>
+          <Case label="hug, empty">
+            <Frame fill-negative-500 height-hug width-hug />
+          </Case>
+          <Case label="dashed">
+            <Frame height-12 stroke-neutral-600 stroke-style-dashed width-12 />
+          </Case>
+          <Case label="1px line">
+            <Frame fill-neutral-700 height-1px width-12 />
+          </Case>
+        </Frame>
+        <Caption>width-fill, height-4</Caption>
+        <Frame fill-positive-400 height-4 width-fill />
+      </Section>
+
+      <Section title="2. Fixed sizes" note="Squares from width-1 to width-28, bottom aligned in a wrapping row.">
+        <Frame alignment-bottom-left flow-horizontal gap-2 height-hug width-fill wrap>
+          <Case label="1">
+            <Frame fill-primary-700 height-1 width-1 />
+          </Case>
+          <Case label="2">
+            <Frame fill-primary-700 height-2 width-2 />
+          </Case>
+          <Case label="4">
+            <Frame fill-primary-700 height-4 width-4 />
+          </Case>
+          <Case label="6">
+            <Frame fill-primary-700 height-6 width-6 />
+          </Case>
+          <Case label="8">
+            <Frame fill-primary-700 height-8 width-8 />
+          </Case>
+          <Case label="10">
+            <Frame fill-primary-700 height-10 width-10 />
+          </Case>
+          <Case label="12">
+            <Frame fill-primary-700 height-12 width-12 />
+          </Case>
+          <Case label="16">
+            <Frame fill-primary-700 height-16 width-16 />
+          </Case>
+          <Case label="20">
+            <Frame fill-primary-700 height-20 width-20 />
+          </Case>
+          <Case label="24">
+            <Frame fill-primary-700 height-24 width-24 />
+          </Case>
+          <Case label="28">
+            <Frame fill-primary-700 height-28 width-28 />
+          </Case>
+          <Case label="28 x 4">
+            <Frame fill-secondary-700 height-4 width-28 />
+          </Case>
+          <Case label="4 x 28">
+            <Frame fill-secondary-700 height-28 width-4 />
+          </Case>
+        </Frame>
+      </Section>
+
+      <Section
+        title="3. Rows: fixed, hug and fill"
+        note="Fill children share the space left over by fixed and hug siblings. Fixed frames never shrink."
+      >
+        <Caption>fixed 16 | fill | fixed 16</Caption>
+        <Frame flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-primary-700 height-12 width-16 />
+          <Frame fill-primary-300 height-12 width-fill />
+          <Frame fill-primary-700 height-12 width-16 />
+        </Frame>
+        <Caption>fill | fill | fill (equal widths)</Caption>
+        <Frame flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-secondary-300 height-12 width-fill />
+          <Frame fill-secondary-500 height-12 width-fill />
+          <Frame fill-secondary-700 height-12 width-fill />
+        </Frame>
+        <Caption>hug text | fill | hug text</Caption>
+        <Frame flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-tertiary-200 height-hug padding-2 width-hug>
+            <Text fill-text-800 typography-body-small-nowrap>
+              Hug left
+            </Text>
+          </Frame>
+          <Frame fill-tertiary-500 height-fill width-fill />
+          <Frame fill-tertiary-200 height-hug padding-2 width-hug>
+            <Text fill-text-800 typography-body-small-nowrap>
+              Hug right
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>fixed 12 | fill with long nowrap text (truncates) | fixed 12</Caption>
+        <Frame alignment-left flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-positive-500 height-12 width-12 />
+          <Frame flow-vertical height-hug width-fill>
+            <Text fill-text-800 typography-body-nowrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-positive-500 height-12 width-12 />
+        </Frame>
+        <Caption>width-full child</Caption>
+        <Frame flow-horizontal height-hug width-fill>
+          <Frame fill-tentative-brand height-6 width-full />
+        </Frame>
+      </Section>
+
+      <Section
+        title="4. Columns: fixed, hug and fill"
+        note="Three 28-high columns side by side. Fill children split the height left by fixed siblings."
+      >
+        <Frame flow-horizontal gap-4 height-28 width-fill>
+          <Frame flow-vertical gap-1 height-fill width-fill>
+            <Frame fill-primary-700 height-6 width-fill />
+            <Frame fill-primary-300 height-fill width-fill />
+            <Frame fill-primary-700 height-6 width-fill />
+          </Frame>
+          <Frame flow-vertical gap-1 height-fill width-fill>
+            <Frame fill-secondary-300 height-fill width-fill />
+            <Frame fill-secondary-500 height-fill width-fill />
+            <Frame fill-secondary-700 height-fill width-fill />
+          </Frame>
+          <Frame fill-tertiary-100 flow-vertical gap-1 height-fill width-fill>
+            <Frame fill-tertiary-500 height-hug padding-1 width-hug>
+              <Text fill-white typography-label-small-nowrap>
+                hug
+              </Text>
+            </Frame>
+            <Frame fill-tertiary-700 height-hug padding-1 width-fill>
+              <Text fill-white typography-label-small-nowrap>
+                width-fill
+              </Text>
+            </Frame>
+          </Frame>
+        </Frame>
+      </Section>
+
+      <Section
+        title="5. Fill on both axes"
+        note="A frame that fills both axes grows along its parent's direction and stretches across it."
+      >
+        <Caption>row, height-20: fixed 12 | fill both | fixed 12</Caption>
+        <Frame fill-neutralsurface-300 flow-horizontal gap-2 height-20 padding-2 width-fill>
+          <Frame fill-primary-700 height-12 width-12 />
+          <Frame alignment-center fill-primary-300 flow-vertical height-fill width-fill>
+            <Text fill-text-800 typography-label-small-nowrap>
+              fill both
+            </Text>
+          </Frame>
+          <Frame fill-primary-700 height-12 width-12 />
+        </Frame>
+        <Caption>column, height-28: fixed 6 | fill both | fill both</Caption>
+        <Frame fill-neutralsurface-300 flow-vertical gap-2 height-28 padding-2 width-fill>
+          <Frame fill-secondary-700 height-6 width-6 />
+          <Frame fill-secondary-300 height-fill width-fill />
+          <Frame fill-secondary-500 height-fill width-fill />
+        </Frame>
+      </Section>
+
+      <Section title="6. Padding" note="An 8 x 8 dark box inside a light frame with each padding flag.">
+        <Frame alignment-top-left flow-horizontal gap-4 height-hug width-fill wrap>
+          <Case label="padding-0">
+            <Frame fill-primary-200 padding-0>
+              <Frame fill-primary-700 height-8 width-8 />
+            </Frame>
+          </Case>
+          <Case label="padding-1px">
+            <Frame fill-primary-200 padding-1px>
+              <Frame fill-primary-700 height-8 width-8 />
+            </Frame>
+          </Case>
+          <Case label="padding-2">
+            <Frame fill-primary-200 padding-2>
+              <Frame fill-primary-700 height-8 width-8 />
+            </Frame>
+          </Case>
+          <Case label="padding-4">
+            <Frame fill-primary-200 padding-4>
+              <Frame fill-primary-700 height-8 width-8 />
+            </Frame>
+          </Case>
+          <Case label="padding-8">
+            <Frame fill-primary-200 padding-8>
+              <Frame fill-primary-700 height-8 width-8 />
+            </Frame>
+          </Case>
+          <Case label="vertical-4">
+            <Frame fill-primary-200 padding-vertical-4>
+              <Frame fill-primary-700 height-8 width-8 />
+            </Frame>
+          </Case>
+          <Case label="horizontal-4">
+            <Frame fill-primary-200 padding-horizontal-4>
+              <Frame fill-primary-700 height-8 width-8 />
+            </Frame>
+          </Case>
+          <Case label="left-6">
+            <Frame fill-primary-200 padding-left-6>
+              <Frame fill-primary-700 height-8 width-8 />
+            </Frame>
+          </Case>
+          <Case label="right-6">
+            <Frame fill-primary-200 padding-right-6>
+              <Frame fill-primary-700 height-8 width-8 />
+            </Frame>
+          </Case>
+          <Case label="top-6">
+            <Frame fill-primary-200 padding-top-6>
+              <Frame fill-primary-700 height-8 width-8 />
+            </Frame>
+          </Case>
+          <Case label="bottom-6">
+            <Frame fill-primary-200 padding-bottom-6>
+              <Frame fill-primary-700 height-8 width-8 />
+            </Frame>
+          </Case>
+          <Case label="top-2 left-8">
+            <Frame fill-primary-200 padding-left-8 padding-top-2>
+              <Frame fill-primary-700 height-8 width-8 />
+            </Frame>
+          </Case>
+        </Frame>
+        <Caption>padding-4 on a width-fill frame with text</Caption>
+        <Frame fill-primary-200 padding-4 width-fill>
+          <Text fill-text-800 typography-body-wrap>
+            {LOREM}
+          </Text>
+        </Frame>
+      </Section>
+
+      <Section title="7. Gaps" note="Three 6 x 6 boxes per row, then a column, with each gap flag.">
+        <Frame alignment-top-left flow-horizontal gap-6 height-hug width-fill wrap>
+          <Case label="gap-0">
+            <Frame flow-horizontal gap-0>
+              <Frame fill-secondary-700 height-6 width-6 />
+              <Frame fill-secondary-500 height-6 width-6 />
+              <Frame fill-secondary-300 height-6 width-6 />
+            </Frame>
+          </Case>
+          <Case label="gap-1px">
+            <Frame flow-horizontal gap-1px>
+              <Frame fill-secondary-700 height-6 width-6 />
+              <Frame fill-secondary-500 height-6 width-6 />
+              <Frame fill-secondary-300 height-6 width-6 />
+            </Frame>
+          </Case>
+          <Case label="gap-0p5">
+            <Frame flow-horizontal gap-0p5>
+              <Frame fill-secondary-700 height-6 width-6 />
+              <Frame fill-secondary-500 height-6 width-6 />
+              <Frame fill-secondary-300 height-6 width-6 />
+            </Frame>
+          </Case>
+          <Case label="gap-1">
+            <Frame flow-horizontal gap-1>
+              <Frame fill-secondary-700 height-6 width-6 />
+              <Frame fill-secondary-500 height-6 width-6 />
+              <Frame fill-secondary-300 height-6 width-6 />
+            </Frame>
+          </Case>
+          <Case label="gap-2">
+            <Frame flow-horizontal gap-2>
+              <Frame fill-secondary-700 height-6 width-6 />
+              <Frame fill-secondary-500 height-6 width-6 />
+              <Frame fill-secondary-300 height-6 width-6 />
+            </Frame>
+          </Case>
+          <Case label="gap-4">
+            <Frame flow-horizontal gap-4>
+              <Frame fill-secondary-700 height-6 width-6 />
+              <Frame fill-secondary-500 height-6 width-6 />
+              <Frame fill-secondary-300 height-6 width-6 />
+            </Frame>
+          </Case>
+          <Case label="gap-8">
+            <Frame flow-horizontal gap-8>
+              <Frame fill-secondary-700 height-6 width-6 />
+              <Frame fill-secondary-500 height-6 width-6 />
+              <Frame fill-secondary-300 height-6 width-6 />
+            </Frame>
+          </Case>
+          <Case label="column gap-3">
+            <Frame flow-vertical gap-3>
+              <Frame fill-secondary-700 height-6 width-6 />
+              <Frame fill-secondary-500 height-6 width-6 />
+              <Frame fill-secondary-300 height-6 width-6 />
+            </Frame>
+          </Case>
+        </Frame>
+      </Section>
+
+      <Section title="8. Corner radius" note="16 x 16 squares with each corner flag.">
+        <Frame alignment-top-left flow-horizontal gap-4 height-hug width-fill wrap>
+          <Case label="0">
+            <Frame corner-radius-0 fill-tertiary-500 height-16 width-16 />
+          </Case>
+          <Case label="1">
+            <Frame corner-radius-1 fill-tertiary-500 height-16 width-16 />
+          </Case>
+          <Case label="2">
+            <Frame corner-radius-2 fill-tertiary-500 height-16 width-16 />
+          </Case>
+          <Case label="4">
+            <Frame corner-radius-4 fill-tertiary-500 height-16 width-16 />
+          </Case>
+          <Case label="8">
+            <Frame corner-radius-8 fill-tertiary-500 height-16 width-16 />
+          </Case>
+          <Case label="full">
+            <Frame corner-radius-full fill-tertiary-500 height-16 width-16 />
+          </Case>
+          <Case label="huge">
+            <Frame corner-radius-huge fill-tertiary-500 height-16 width-16 />
+          </Case>
+          <Case label="top-left-6">
+            <Frame corner-radius-top-left-6 fill-tertiary-500 height-16 width-16 />
+          </Case>
+          <Case label="top-right-6">
+            <Frame corner-radius-top-right-6 fill-tertiary-500 height-16 width-16 />
+          </Case>
+          <Case label="bottom-left-6">
+            <Frame corner-radius-bottom-left-6 fill-tertiary-500 height-16 width-16 />
+          </Case>
+          <Case label="bottom-right-6">
+            <Frame corner-radius-bottom-right-6 fill-tertiary-500 height-16 width-16 />
+          </Case>
+          <Case label="leaf">
+            <Frame corner-radius-bottom-right-full corner-radius-top-left-full fill-tertiary-500 height-16 width-16 />
+          </Case>
+          <Case label="border-radius-4">
+            <Frame border-radius-4 fill-tertiary-500 height-16 width-16 />
+          </Case>
+          <Case label="pill 28 x 8">
+            <Frame corner-radius-full fill-tertiary-500 height-8 width-28 />
+          </Case>
+        </Frame>
+      </Section>
+
+      <Section title="9. Fills and strokes" note="Each palette at 300, 500, 700 and brand, then strokes on white.">
+        <Frame flow-vertical gap-1 height-hug width-fill>
+          <Frame flow-horizontal gap-1 height-hug width-fill>
+            <Frame fill-primary-300 height-8 width-fill />
+            <Frame fill-primary-500 height-8 width-fill />
+            <Frame fill-primary-700 height-8 width-fill />
+            <Frame fill-primary-brand height-8 width-fill />
+          </Frame>
+          <Frame flow-horizontal gap-1 height-hug width-fill>
+            <Frame fill-secondary-300 height-8 width-fill />
+            <Frame fill-secondary-500 height-8 width-fill />
+            <Frame fill-secondary-700 height-8 width-fill />
+            <Frame fill-secondary-brand height-8 width-fill />
+          </Frame>
+          <Frame flow-horizontal gap-1 height-hug width-fill>
+            <Frame fill-tertiary-300 height-8 width-fill />
+            <Frame fill-tertiary-500 height-8 width-fill />
+            <Frame fill-tertiary-700 height-8 width-fill />
+            <Frame fill-tertiary-brand height-8 width-fill />
+          </Frame>
+          <Frame flow-horizontal gap-1 height-hug width-fill>
+            <Frame fill-tentative-300 height-8 width-fill />
+            <Frame fill-tentative-500 height-8 width-fill />
+            <Frame fill-tentative-700 height-8 width-fill />
+            <Frame fill-tentative-brand height-8 width-fill />
+          </Frame>
+          <Frame flow-horizontal gap-1 height-hug width-fill>
+            <Frame fill-positive-300 height-8 width-fill />
+            <Frame fill-positive-500 height-8 width-fill />
+            <Frame fill-positive-700 height-8 width-fill />
+            <Frame fill-positive-brand height-8 width-fill />
+          </Frame>
+          <Frame flow-horizontal gap-1 height-hug width-fill>
+            <Frame fill-negative-300 height-8 width-fill />
+            <Frame fill-negative-500 height-8 width-fill />
+            <Frame fill-negative-700 height-8 width-fill />
+            <Frame fill-negative-brand height-8 width-fill />
+          </Frame>
+          <Frame flow-horizontal gap-1 height-hug width-fill>
+            <Frame fill-neutral-300 height-8 width-fill />
+            <Frame fill-neutral-500 height-8 width-fill />
+            <Frame fill-neutral-700 height-8 width-fill />
+            <Frame fill-black height-8 width-fill />
+          </Frame>
+        </Frame>
+        <Frame alignment-top-left flow-horizontal gap-4 height-hug width-fill wrap>
+          <Case label="stroke solid">
+            <Frame fill-white height-16 stroke-neutral-600 stroke-style-solid width-16 />
+          </Case>
+          <Case label="stroke dashed">
+            <Frame fill-white height-16 stroke-neutral-600 stroke-style-dashed width-16 />
+          </Case>
+          <Case label="stroke + round">
+            <Frame corner-radius-4 fill-white height-16 stroke-primary-700 width-16 />
+          </Case>
+          <Case label="stroke + full">
+            <Frame corner-radius-full fill-white height-16 stroke-secondary-700 width-16 />
+          </Case>
+          <Case label="transparent">
+            <Frame fill-transparent height-16 stroke-tertiary-700 width-16 />
+          </Case>
+          <Case label="hover (web)">
+            <Frame fill-hover-primary-500 fill-primary-200 height-16 width-16 />
+          </Case>
+        </Frame>
+      </Section>
+
+      <Section title="10. Shadows" note="Shadows on white and tinted frames.">
+        <Frame alignment-top-left fill-white flow-horizontal gap-6 height-hug padding-4 width-fill wrap>
+          <Case label="white none">
+            <Frame corner-radius-2 effect-shadow-none fill-white height-16 width-16 />
+          </Case>
+          <Case label="white small">
+            <Frame corner-radius-2 effect-shadow-small fill-white height-16 width-16 />
+          </Case>
+          <Case label="white large">
+            <Frame corner-radius-2 effect-shadow-large fill-white height-16 width-16 />
+          </Case>
+          <Case label="primary small">
+            <Frame corner-radius-2 effect-shadow-small fill-primary-500 height-16 width-16 />
+          </Case>
+          <Case label="primary large">
+            <Frame corner-radius-2 effect-shadow-large fill-primary-500 height-16 width-16 />
+          </Case>
+        </Frame>
+      </Section>
+
+      <Section
+        title="11. Alignment"
+        note="20 x 20 frames with each alignment flag. Horizontal flow holds two boxes side by side, vertical flow stacks them."
+      >
+        <Caption>flow-horizontal</Caption>
+        <Frame alignment-top-left flow-horizontal gap-4 height-hug width-fill wrap>
+          <Case label="top-left">
+            <Frame alignment-top-left fill-neutralsurface-300 flow-horizontal gap-1 height-20 width-20>
+              <Frame fill-primary-700 height-4 width-4 />
+              <Frame fill-primary-400 height-6 width-4 />
+            </Frame>
+          </Case>
+          <Case label="top-center">
+            <Frame alignment-top-center fill-neutralsurface-300 flow-horizontal gap-1 height-20 width-20>
+              <Frame fill-primary-700 height-4 width-4 />
+              <Frame fill-primary-400 height-6 width-4 />
+            </Frame>
+          </Case>
+          <Case label="top-right">
+            <Frame alignment-top-right fill-neutralsurface-300 flow-horizontal gap-1 height-20 width-20>
+              <Frame fill-primary-700 height-4 width-4 />
+              <Frame fill-primary-400 height-6 width-4 />
+            </Frame>
+          </Case>
+          <Case label="left">
+            <Frame alignment-left fill-neutralsurface-300 flow-horizontal gap-1 height-20 width-20>
+              <Frame fill-primary-700 height-4 width-4 />
+              <Frame fill-primary-400 height-6 width-4 />
+            </Frame>
+          </Case>
+          <Case label="center">
+            <Frame alignment-center fill-neutralsurface-300 flow-horizontal gap-1 height-20 width-20>
+              <Frame fill-primary-700 height-4 width-4 />
+              <Frame fill-primary-400 height-6 width-4 />
+            </Frame>
+          </Case>
+          <Case label="right">
+            <Frame alignment-right fill-neutralsurface-300 flow-horizontal gap-1 height-20 width-20>
+              <Frame fill-primary-700 height-4 width-4 />
+              <Frame fill-primary-400 height-6 width-4 />
+            </Frame>
+          </Case>
+          <Case label="bottom-left">
+            <Frame alignment-bottom-left fill-neutralsurface-300 flow-horizontal gap-1 height-20 width-20>
+              <Frame fill-primary-700 height-4 width-4 />
+              <Frame fill-primary-400 height-6 width-4 />
+            </Frame>
+          </Case>
+          <Case label="bottom-center">
+            <Frame alignment-bottom-center fill-neutralsurface-300 flow-horizontal gap-1 height-20 width-20>
+              <Frame fill-primary-700 height-4 width-4 />
+              <Frame fill-primary-400 height-6 width-4 />
+            </Frame>
+          </Case>
+          <Case label="bottom-right">
+            <Frame alignment-bottom-right fill-neutralsurface-300 flow-horizontal gap-1 height-20 width-20>
+              <Frame fill-primary-700 height-4 width-4 />
+              <Frame fill-primary-400 height-6 width-4 />
+            </Frame>
+          </Case>
+        </Frame>
+        <Caption>flow-vertical</Caption>
+        <Frame alignment-top-left flow-horizontal gap-4 height-hug width-fill wrap>
+          <Case label="top-left">
+            <Frame alignment-top-left fill-neutralsurface-300 flow-vertical gap-1 height-20 width-20>
+              <Frame fill-secondary-700 height-4 width-4 />
+              <Frame fill-secondary-400 height-4 width-6 />
+            </Frame>
+          </Case>
+          <Case label="top-center">
+            <Frame alignment-top-center fill-neutralsurface-300 flow-vertical gap-1 height-20 width-20>
+              <Frame fill-secondary-700 height-4 width-4 />
+              <Frame fill-secondary-400 height-4 width-6 />
+            </Frame>
+          </Case>
+          <Case label="top-right">
+            <Frame alignment-top-right fill-neutralsurface-300 flow-vertical gap-1 height-20 width-20>
+              <Frame fill-secondary-700 height-4 width-4 />
+              <Frame fill-secondary-400 height-4 width-6 />
+            </Frame>
+          </Case>
+          <Case label="left">
+            <Frame alignment-left fill-neutralsurface-300 flow-vertical gap-1 height-20 width-20>
+              <Frame fill-secondary-700 height-4 width-4 />
+              <Frame fill-secondary-400 height-4 width-6 />
+            </Frame>
+          </Case>
+          <Case label="center">
+            <Frame alignment-center fill-neutralsurface-300 flow-vertical gap-1 height-20 width-20>
+              <Frame fill-secondary-700 height-4 width-4 />
+              <Frame fill-secondary-400 height-4 width-6 />
+            </Frame>
+          </Case>
+          <Case label="right">
+            <Frame alignment-right fill-neutralsurface-300 flow-vertical gap-1 height-20 width-20>
+              <Frame fill-secondary-700 height-4 width-4 />
+              <Frame fill-secondary-400 height-4 width-6 />
+            </Frame>
+          </Case>
+          <Case label="bottom-left">
+            <Frame alignment-bottom-left fill-neutralsurface-300 flow-vertical gap-1 height-20 width-20>
+              <Frame fill-secondary-700 height-4 width-4 />
+              <Frame fill-secondary-400 height-4 width-6 />
+            </Frame>
+          </Case>
+          <Case label="bottom-center">
+            <Frame alignment-bottom-center fill-neutralsurface-300 flow-vertical gap-1 height-20 width-20>
+              <Frame fill-secondary-700 height-4 width-4 />
+              <Frame fill-secondary-400 height-4 width-6 />
+            </Frame>
+          </Case>
+          <Case label="bottom-right">
+            <Frame alignment-bottom-right fill-neutralsurface-300 flow-vertical gap-1 height-20 width-20>
+              <Frame fill-secondary-700 height-4 width-4 />
+              <Frame fill-secondary-400 height-4 width-6 />
+            </Frame>
+          </Case>
+        </Frame>
+      </Section>
+
+      <Section
+        title="12. Wrapping"
+        note="Pills in a wrapping row, then the same boxes in a 28-wide frame with and without wrap."
+      >
+        <Frame flow-horizontal gap-2 height-hug width-fill wrap>
+          <Frame corner-radius-full fill-primary-100 padding-horizontal-3 padding-vertical-1>
+            <Text fill-primary-800 typography-label-small-nowrap>
+              Design
+            </Text>
+          </Frame>
+          <Frame corner-radius-full fill-secondary-100 padding-horizontal-3 padding-vertical-1>
+            <Text fill-secondary-800 typography-label-small-nowrap>
+              Engineering
+            </Text>
+          </Frame>
+          <Frame corner-radius-full fill-tertiary-100 padding-horizontal-3 padding-vertical-1>
+            <Text fill-tertiary-800 typography-label-small-nowrap>
+              Research
+            </Text>
+          </Frame>
+          <Frame corner-radius-full fill-positive-100 padding-horizontal-3 padding-vertical-1>
+            <Text fill-positive-800 typography-label-small-nowrap>
+              Shipped
+            </Text>
+          </Frame>
+          <Frame corner-radius-full fill-negative-100 padding-horizontal-3 padding-vertical-1>
+            <Text fill-negative-800 typography-label-small-nowrap>
+              Blocked
+            </Text>
+          </Frame>
+          <Frame corner-radius-full fill-tentative-100 padding-horizontal-3 padding-vertical-1>
+            <Text fill-tentative-800 typography-label-small-nowrap>
+              In review
+            </Text>
+          </Frame>
+          <Frame corner-radius-full fill-neutral-200 padding-horizontal-3 padding-vertical-1>
+            <Text fill-neutral-800 typography-label-small-nowrap>
+              Backlog
+            </Text>
+          </Frame>
+          <Frame corner-radius-full fill-primary-100 padding-horizontal-3 padding-vertical-1>
+            <Text fill-primary-800 typography-label-small-nowrap>
+              A much longer pill label
+            </Text>
+          </Frame>
+          <Frame corner-radius-full fill-secondary-100 padding-horizontal-3 padding-vertical-1>
+            <Text fill-secondary-800 typography-label-small-nowrap>
+              Mobile
+            </Text>
+          </Frame>
+          <Frame corner-radius-full fill-tertiary-100 padding-horizontal-3 padding-vertical-1>
+            <Text fill-tertiary-800 typography-label-small-nowrap>
+              Web
+            </Text>
+          </Frame>
+        </Frame>
+        <Frame alignment-top-left flow-horizontal gap-6 height-hug width-fill wrap>
+          <Case label="width-28, wrap">
+            <Frame fill-white flow-horizontal gap-1 height-hug padding-1 width-28 wrap>
+              <Frame fill-tertiary-300 height-6 width-6 />
+              <Frame fill-tertiary-400 height-6 width-6 />
+              <Frame fill-tertiary-500 height-6 width-6 />
+              <Frame fill-tertiary-600 height-6 width-6 />
+              <Frame fill-tertiary-700 height-6 width-6 />
+              <Frame fill-tertiary-800 height-6 width-6 />
+              <Frame fill-tertiary-900 height-6 width-6 />
+            </Frame>
+          </Case>
+          <Case label="width-28, no wrap (overflows)">
+            <Frame fill-white flow-horizontal gap-1 height-hug padding-1 width-28>
+              <Frame fill-tertiary-300 height-6 width-6 />
+              <Frame fill-tertiary-400 height-6 width-6 />
+              <Frame fill-tertiary-500 height-6 width-6 />
+              <Frame fill-tertiary-600 height-6 width-6 />
+              <Frame fill-tertiary-700 height-6 width-6 />
+              <Frame fill-tertiary-800 height-6 width-6 />
+              <Frame fill-tertiary-900 height-6 width-6 />
+            </Frame>
+          </Case>
+        </Frame>
+      </Section>
+
+      <Section title="13. Typography" note="Every typography flag, in black.">
+        <Frame flow-vertical gap-2 height-hug width-fill>
+          <Text fill-text-800 typography-display-wrap>
+            display-wrap
+          </Text>
+          <Text fill-text-800 typography-header-wrap>
+            header-wrap
+          </Text>
+          <Text fill-text-800 typography-header-small-wrap>
+            header-small-wrap
+          </Text>
+          <Text fill-text-800 typography-body-wrap>
+            body-wrap
+          </Text>
+          <Text fill-text-800 typography-body-nowrap>
+            body-nowrap
+          </Text>
+          <Text fill-text-800 typography-body-small-wrap>
+            body-small-wrap
+          </Text>
+          <Text fill-text-800 typography-body-small-nowrap>
+            body-small-nowrap
+          </Text>
+          <Text fill-text-800 typography-mono-wrap>
+            mono-wrap
+          </Text>
+          <Text fill-text-800 typography-mono-nowrap>
+            mono-nowrap
+          </Text>
+          <Text fill-text-800 typography-mono-small-wrap>
+            mono-small-wrap
+          </Text>
+          <Text fill-text-800 typography-mono-small-nowrap>
+            mono-small-nowrap
+          </Text>
+          <Text fill-text-800 typography-label-wrap>
+            label-wrap
+          </Text>
+          <Text fill-text-800 typography-label-nowrap>
+            label-nowrap
+          </Text>
+          <Text fill-text-800 typography-label-small-wrap>
+            label-small-wrap
+          </Text>
+          <Text fill-text-800 typography-label-small-nowrap>
+            label-small-nowrap
+          </Text>
+          <Text fill-text-800 typography-timecode>
+            01:23:45:12
+          </Text>
+          <Text fill-primary-700 typography-body-wrap typography-decoration-underline>
+            underlined primary-700
+          </Text>
+        </Frame>
+      </Section>
+
+      <Section
+        title="14. Typography wrapping"
+        note="Each type in a 28-wide frame and a fill frame with text longer than any screen. Types ending in -wrap may wrap; every other type stays on one line and ends in an ellipsis."
+      >
+        <Caption>timecode</Caption>
+        <Frame alignment-top-left flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-white flow-vertical padding-2 width-28>
+            <Text fill-text-800 typography-timecode>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-white flow-vertical padding-2 width-fill>
+            <Text fill-text-800 typography-timecode>
+              {LOREM_LONG}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>display-wrap</Caption>
+        <Frame alignment-top-left flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-white flow-vertical padding-2 width-28>
+            <Text fill-text-800 typography-display-wrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-white flow-vertical padding-2 width-fill>
+            <Text fill-text-800 typography-display-wrap>
+              {LOREM_LONG}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>header-wrap</Caption>
+        <Frame alignment-top-left flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-white flow-vertical padding-2 width-28>
+            <Text fill-text-800 typography-header-wrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-white flow-vertical padding-2 width-fill>
+            <Text fill-text-800 typography-header-wrap>
+              {LOREM_LONG}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>header-small-wrap</Caption>
+        <Frame alignment-top-left flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-white flow-vertical padding-2 width-28>
+            <Text fill-text-800 typography-header-small-wrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-white flow-vertical padding-2 width-fill>
+            <Text fill-text-800 typography-header-small-wrap>
+              {LOREM_LONG}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>body-wrap</Caption>
+        <Frame alignment-top-left flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-white flow-vertical padding-2 width-28>
+            <Text fill-text-800 typography-body-wrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-white flow-vertical padding-2 width-fill>
+            <Text fill-text-800 typography-body-wrap>
+              {LOREM_LONG}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>body-nowrap</Caption>
+        <Frame alignment-top-left flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-white flow-vertical padding-2 width-28>
+            <Text fill-text-800 typography-body-nowrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-white flow-vertical padding-2 width-fill>
+            <Text fill-text-800 typography-body-nowrap>
+              {LOREM_LONG}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>body-small-wrap</Caption>
+        <Frame alignment-top-left flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-white flow-vertical padding-2 width-28>
+            <Text fill-text-800 typography-body-small-wrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-white flow-vertical padding-2 width-fill>
+            <Text fill-text-800 typography-body-small-wrap>
+              {LOREM_LONG}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>body-small-nowrap</Caption>
+        <Frame alignment-top-left flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-white flow-vertical padding-2 width-28>
+            <Text fill-text-800 typography-body-small-nowrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-white flow-vertical padding-2 width-fill>
+            <Text fill-text-800 typography-body-small-nowrap>
+              {LOREM_LONG}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>mono-wrap</Caption>
+        <Frame alignment-top-left flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-white flow-vertical padding-2 width-28>
+            <Text fill-text-800 typography-mono-wrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-white flow-vertical padding-2 width-fill>
+            <Text fill-text-800 typography-mono-wrap>
+              {LOREM_LONG}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>mono-nowrap</Caption>
+        <Frame alignment-top-left flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-white flow-vertical padding-2 width-28>
+            <Text fill-text-800 typography-mono-nowrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-white flow-vertical padding-2 width-fill>
+            <Text fill-text-800 typography-mono-nowrap>
+              {LOREM_LONG}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>mono-small-wrap</Caption>
+        <Frame alignment-top-left flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-white flow-vertical padding-2 width-28>
+            <Text fill-text-800 typography-mono-small-wrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-white flow-vertical padding-2 width-fill>
+            <Text fill-text-800 typography-mono-small-wrap>
+              {LOREM_LONG}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>mono-small-nowrap</Caption>
+        <Frame alignment-top-left flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-white flow-vertical padding-2 width-28>
+            <Text fill-text-800 typography-mono-small-nowrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-white flow-vertical padding-2 width-fill>
+            <Text fill-text-800 typography-mono-small-nowrap>
+              {LOREM_LONG}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>label-wrap</Caption>
+        <Frame alignment-top-left flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-white flow-vertical padding-2 width-28>
+            <Text fill-text-800 typography-label-wrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-white flow-vertical padding-2 width-fill>
+            <Text fill-text-800 typography-label-wrap>
+              {LOREM_LONG}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>label-nowrap</Caption>
+        <Frame alignment-top-left flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-white flow-vertical padding-2 width-28>
+            <Text fill-text-800 typography-label-nowrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-white flow-vertical padding-2 width-fill>
+            <Text fill-text-800 typography-label-nowrap>
+              {LOREM_LONG}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>label-small-wrap</Caption>
+        <Frame alignment-top-left flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-white flow-vertical padding-2 width-28>
+            <Text fill-text-800 typography-label-small-wrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-white flow-vertical padding-2 width-fill>
+            <Text fill-text-800 typography-label-small-wrap>
+              {LOREM_LONG}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>label-small-nowrap</Caption>
+        <Frame alignment-top-left flow-horizontal gap-2 height-hug width-fill>
+          <Frame fill-white flow-vertical padding-2 width-28>
+            <Text fill-text-800 typography-label-small-nowrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-white flow-vertical padding-2 width-fill>
+            <Text fill-text-800 typography-label-small-nowrap>
+              {LOREM_LONG}
+            </Text>
+          </Frame>
+        </Frame>
+      </Section>
+
+      <Section
+        title="15. Text alignment and wrapping"
+        note="Long text in width-fill frames with each alignment, then wrap and nowrap in a 28-wide frame."
+      >
+        <Frame fill-white padding-3 width-fill>
+          <Text fill-text-800 typography-align-left typography-body-wrap>
+            {LOREM}
+          </Text>
+        </Frame>
+        <Frame fill-white padding-3 width-fill>
+          <Text fill-text-800 typography-align-center typography-body-wrap>
+            {LOREM}
+          </Text>
+        </Frame>
+        <Frame fill-white padding-3 width-fill>
+          <Text fill-text-800 typography-align-right typography-body-wrap>
+            {LOREM}
+          </Text>
+        </Frame>
+        <Frame alignment-top-left flow-horizontal gap-4 height-hug width-fill wrap>
+          <Case label="width-28, body-small-wrap">
+            <Frame fill-white padding-2 width-28>
+              <Text fill-text-800 typography-body-small-wrap>
+                {LOREM}
+              </Text>
+            </Frame>
+          </Case>
+          <Case label="width-28, body-small-nowrap">
+            <Frame fill-white padding-2 width-28>
+              <Text fill-text-800 typography-body-small-nowrap>
+                {LOREM}
+              </Text>
+            </Frame>
+          </Case>
+          <Case label="width-28, mono-small-wrap">
+            <Frame fill-white padding-2 width-28>
+              <Text fill-text-800 typography-mono-small-wrap>
+                {LOREM}
+              </Text>
+            </Frame>
+          </Case>
+        </Frame>
+        <Caption>two texts side by side, each in a fill frame</Caption>
+        <Frame flow-horizontal gap-3 height-hug width-fill>
+          <Frame fill-white padding-2 width-fill>
+            <Text fill-text-800 typography-body-small-wrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame fill-white padding-2 width-fill>
+            <Text fill-text-800 typography-body-small-wrap>
+              Short text.
+            </Text>
+          </Frame>
+        </Frame>
+      </Section>
+
+      <Section title="16. Card" note="Text and frames nested into a card with a shadow, tag and buttons.">
+        <Frame corner-radius-4 effect-shadow-large fill-white flow-vertical gap-3 height-hug padding-4 width-fill>
+          <Frame alignment-left flow-horizontal gap-2 height-hug width-fill>
+            <Frame flow-vertical height-hug width-fill>
+              <Text fill-text-800 typography-header-small-wrap>
+                Quarterly review
+              </Text>
+              <Text fill-neutral-600 typography-body-small-nowrap>
+                Thursday, 14:00 to 15:30
+              </Text>
+            </Frame>
+            <Frame corner-radius-full fill-positive-100 padding-horizontal-2 padding-vertical-0p5>
+              <Text fill-positive-800 typography-label-small-nowrap>
+                Confirmed
+              </Text>
+            </Frame>
+          </Frame>
+          <Frame fill-neutral-300 height-1px width-fill />
+          <Text fill-text-800 typography-body-wrap>
+            {LOREM}
+          </Text>
+          <Frame alignment-right flow-horizontal gap-2 height-hug width-fill>
+            <Frame alignment-center corner-radius-full height-10 padding-horizontal-4 stroke-neutral-400 width-hug>
+              <Text fill-text-800 typography-label-nowrap>
+                Decline
+              </Text>
+            </Frame>
+            <Frame alignment-center corner-radius-full fill-primary-700 height-10 padding-horizontal-4 width-hug>
+              <Text fill-white typography-label-nowrap>
+                Accept
+              </Text>
+            </Frame>
+          </Frame>
+        </Frame>
+      </Section>
+
+      <Section
+        title="17. List rows"
+        note="Avatar, two lines of text that truncate, and a trailing badge. The middle column fills."
+      >
+        <Frame corner-radius-3 fill-white flow-vertical height-hug width-fill>
+          <Frame alignment-left flow-horizontal gap-3 height-hug padding-3 width-fill>
+            <Frame alignment-center corner-radius-full fill-primary-200 height-10 width-10>
+              <Text fill-primary-800 typography-label-nowrap>
+                AL
+              </Text>
+            </Frame>
+            <Frame flow-vertical height-hug width-fill>
+              <Text fill-text-800 typography-body-nowrap>
+                Ada Lovelace
+              </Text>
+              <Text fill-neutral-600 typography-body-small-nowrap>
+                Short subtitle
+              </Text>
+            </Frame>
+            <Frame corner-radius-full fill-primary-700 padding-horizontal-2>
+              <Text fill-white typography-label-small-nowrap>
+                3
+              </Text>
+            </Frame>
+          </Frame>
+          <Frame fill-neutral-200 height-1px width-fill />
+          <Frame alignment-left flow-horizontal gap-3 height-hug padding-3 width-fill>
+            <Frame alignment-center corner-radius-full fill-secondary-200 height-10 width-10>
+              <Text fill-secondary-800 typography-label-nowrap>
+                GH
+              </Text>
+            </Frame>
+            <Frame flow-vertical height-hug width-fill>
+              <Text fill-text-800 typography-body-nowrap>
+                Grace Hopper with a name long enough to truncate on a narrow phone screen
+              </Text>
+              <Text fill-neutral-600 typography-body-small-nowrap>
+                {LOREM}
+              </Text>
+            </Frame>
+            <Frame corner-radius-full fill-secondary-700 padding-horizontal-2>
+              <Text fill-white typography-label-small-nowrap>
+                128
+              </Text>
+            </Frame>
+          </Frame>
+          <Frame fill-neutral-200 height-1px width-fill />
+          <Frame alignment-left flow-horizontal gap-3 height-hug padding-3 width-fill>
+            <Frame alignment-center corner-radius-full fill-tertiary-200 height-10 width-10>
+              <Text fill-tertiary-800 typography-label-nowrap>
+                KJ
+              </Text>
+            </Frame>
+            <Frame flow-vertical height-hug width-fill>
+              <Text fill-text-800 typography-body-nowrap>
+                Katherine Johnson
+              </Text>
+              <Text fill-neutral-600 typography-body-small-wrap>
+                This subtitle wraps instead of truncating, so the row grows taller and the avatar and badge stay
+                centered.
+              </Text>
+            </Frame>
+            <Frame corner-radius-full fill-neutral-300 height-6 width-6 />
+          </Frame>
+        </Frame>
+      </Section>
+
+      <Section
+        title="18. Rows of columns, columns of rows"
+        note="An app shell: header, a sidebar beside a 2 x 2 grid of fill cards, and a footer."
+      >
+        <Frame corner-radius-3 fill-white flow-vertical height-hug stroke-neutral-300 width-fill>
           <Frame
             alignment-left
+            corner-radius-top-left-3
+            corner-radius-top-right-3
+            fill-neutral-700
             flow-horizontal
             gap-2
-            height-hug
+            height-12
+            padding-horizontal-3
             width-fill
           >
-            <Frame
-              alignment-center
-              corner-radius-full
-              fill-neutralsurface-100
-              flow-horizontal
-              height-8
-              width-8
-            >
-              <Vector
-                fill-text-700
-                path="M1.25 2.5 C0.91 2.5 0.61 2.38 0.37 2.13 C0.12 1.89 0 1.59 0 1.25 C0 0.91 0.12 0.61 0.37 0.37 C0.61 0.12 0.91 0 1.25 0 C1.59 0 1.89 0.12 2.13 0.37 C2.38 0.61 2.5 0.91 2.5 1.25 C2.5 1.59 2.38 1.89 2.13 2.13 C1.89 2.38 1.59 2.5 1.25 2.5 Z M6.06 2.5 C5.71 2.5 5.42 2.38 5.18 2.13 C4.93 1.89 4.81 1.59 4.81 1.25 C4.81 0.91 4.93 0.61 5.18 0.37 C5.42 0.12 5.71 0 6.06 0 C6.4 0 6.7 0.12 6.94 0.37 C7.19 0.61 7.31 0.91 7.31 1.25 C7.31 1.59 7.19 1.89 6.94 2.13 C6.7 2.38 6.4 2.5 6.06 2.5 Z M10.87 2.5 C10.52 2.5 10.23 2.38 9.98 2.13 C9.74 1.89 9.62 1.59 9.62 1.25 C9.62 0.91 9.74 0.61 9.98 0.37 C10.23 0.12 10.52 0 10.87 0 C11.21 0 11.5 0.12 11.75 0.37 C11.99 0.61 12.12 0.91 12.12 1.25 C12.12 1.59 11.99 1.89 11.75 2.13 C11.5 2.38 11.21 2.5 10.87 2.5 Z"
-                viewBox="-3.94 -8.75 20 20"
-              />
-            </Frame>
-            <Frame
-              alignment-left
-              corner-radius-full
-              fill-neutralsurface-100
-              flow-horizontal
-              gap-0p5
-              height-8
-              padding-left-3
-              width-hug
-            >
-              <Text
-                fill-text-700
-                typography-align-left
-                typography-body-small-wrap
-              >
-                Older chat
+            <Frame corner-radius-1 fill-primary-500 height-6 width-6 />
+            <Frame flow-vertical width-fill>
+              <Text fill-white typography-label-nowrap>
+                Header
               </Text>
-              <Frame
-                alignment-center
-                corner-radius-full
-                fill-neutralsurface-100
-                flow-horizontal
-                height-8
-                width-8
-              >
-                <Vector
-                  fill-tertiary-700
-                  path="M3.77 4.64 L1.06 7.34 C0.94 7.46 0.8 7.52 0.62 7.52 C0.45 7.52 0.31 7.46 0.19 7.34 C0.06 7.21 0 7.07 0 6.89 C0 6.72 0.06 6.57 0.19 6.45 L2.88 3.75 L0.18 1.07 C0.06 0.95 0 0.8 0 0.62 C0 0.45 0.06 0.3 0.19 0.18 C0.31 0.06 0.45 0 0.63 0 C0.8 0 0.95 0.06 1.07 0.18 L3.77 2.89 L6.45 0.18 C6.57 0.06 6.72 0 6.89 0 C7.06 0 7.21 0.06 7.33 0.18 C7.46 0.31 7.52 0.46 7.52 0.63 C7.52 0.8 7.46 0.95 7.33 1.07 L4.63 3.75 L7.34 6.46 C7.46 6.58 7.52 6.72 7.52 6.9 C7.52 7.07 7.46 7.21 7.34 7.34 C7.21 7.46 7.06 7.53 6.89 7.53 C6.72 7.53 6.57 7.46 6.45 7.34 L3.77 4.64 Z"
-                  viewBox="-6.23 -6.25 20 20"
-                />
+            </Frame>
+            <Frame corner-radius-full fill-neutral-500 height-6 width-6 />
+          </Frame>
+          <Frame flow-horizontal height-hug width-fill>
+            <Frame fill-neutralsurface-100 flow-vertical gap-1 height-fill padding-2 width-24>
+              <Frame corner-radius-1 fill-primary-100 padding-2 width-fill>
+                <Text fill-primary-800 typography-label-small-nowrap>
+                  Inbox
+                </Text>
+              </Frame>
+              <Frame padding-2 width-fill>
+                <Text fill-text-800 typography-label-small-nowrap>
+                  Drafts
+                </Text>
+              </Frame>
+              <Frame padding-2 width-fill>
+                <Text fill-text-800 typography-label-small-nowrap>
+                  Archive
+                </Text>
               </Frame>
             </Frame>
-            <Frame
-              alignment-left
-              corner-radius-full
-              fill-neutralsurface-100
-              flow-horizontal
-              gap-0p5
-              height-8
-              padding-left-3
-              width-hug
-            >
-              <Text
-                fill-text-700
-                typography-align-left
-                typography-body-small-wrap
-              >
-                Older chat
-              </Text>
-              <Frame
-                alignment-center
-                corner-radius-full
-                fill-neutralsurface-100
-                flow-horizontal
-                height-8
-                width-8
-              >
-                <Vector
-                  fill-text-400
-                  path="M3.77 4.64 L1.06 7.34 C0.94 7.46 0.8 7.52 0.62 7.52 C0.45 7.52 0.31 7.46 0.19 7.34 C0.06 7.21 0 7.07 0 6.89 C0 6.72 0.06 6.57 0.19 6.45 L2.88 3.75 L0.18 1.07 C0.06 0.95 0 0.8 0 0.62 C0 0.45 0.06 0.3 0.19 0.18 C0.31 0.06 0.45 0 0.63 0 C0.8 0 0.95 0.06 1.07 0.18 L3.77 2.89 L6.45 0.18 C6.57 0.06 6.72 0 6.89 0 C7.06 0 7.21 0.06 7.33 0.18 C7.46 0.31 7.52 0.46 7.52 0.63 C7.52 0.8 7.46 0.95 7.33 1.07 L4.63 3.75 L7.34 6.46 C7.46 6.58 7.52 6.72 7.52 6.9 C7.52 7.07 7.46 7.21 7.34 7.34 C7.21 7.46 7.06 7.53 6.89 7.53 C6.72 7.53 6.57 7.46 6.45 7.34 L3.77 4.64 Z"
-                  viewBox="0 0 7.52 7.53"
-                />
+            <Frame flow-vertical gap-2 height-hug padding-2 width-fill>
+              <Frame flow-horizontal gap-2 height-hug width-fill>
+                <Frame corner-radius-2 fill-primary-100 flow-vertical gap-1 height-hug padding-2 width-fill>
+                  <Text fill-text-800 typography-label-nowrap>
+                    One
+                  </Text>
+                  <Text fill-neutral-600 typography-body-small-wrap>
+                    A short card.
+                  </Text>
+                </Frame>
+                <Frame corner-radius-2 fill-secondary-100 flow-vertical gap-1 height-fill padding-2 width-fill>
+                  <Text fill-text-800 typography-label-nowrap>
+                    Two
+                  </Text>
+                  <Text fill-neutral-600 typography-body-small-wrap>
+                    Fills the row height.
+                  </Text>
+                </Frame>
               </Frame>
-            </Frame>
-            <Frame
-              alignment-left
-              corner-radius-full
-              fill-neutralsurface-100
-              flow-horizontal
-              gap-0p5
-              height-8
-              padding-left-3
-              width-hug
-            >
-              <Text
-                fill-text-700
-                typography-align-left
-                typography-body-small-wrap
-              >
-                Old chat
-              </Text>
-              <Frame
-                alignment-center
-                corner-radius-full
-                fill-neutralsurface-100
-                flow-horizontal
-                height-8
-                width-8
-              >
-                <Vector
-                  fill-text-400
-                  path="M3.77 4.64 L1.06 7.34 C0.94 7.46 0.8 7.52 0.62 7.52 C0.45 7.52 0.31 7.46 0.19 7.34 C0.06 7.21 0 7.07 0 6.89 C0 6.72 0.06 6.57 0.19 6.45 L2.88 3.75 L0.18 1.07 C0.06 0.95 0 0.8 0 0.62 C0 0.45 0.06 0.3 0.19 0.18 C0.31 0.06 0.45 0 0.63 0 C0.8 0 0.95 0.06 1.07 0.18 L3.77 2.89 L6.45 0.18 C6.57 0.06 6.72 0 6.89 0 C7.06 0 7.21 0.06 7.33 0.18 C7.46 0.31 7.52 0.46 7.52 0.63 C7.52 0.8 7.46 0.95 7.33 1.07 L4.63 3.75 L7.34 6.46 C7.46 6.58 7.52 6.72 7.52 6.9 C7.52 7.07 7.46 7.21 7.34 7.34 C7.21 7.46 7.06 7.53 6.89 7.53 C6.72 7.53 6.57 7.46 6.45 7.34 L3.77 4.64 Z"
-                  viewBox="-6.23 -6.25 20 20"
-                />
+              <Frame flow-horizontal gap-2 height-hug width-fill>
+                <Frame corner-radius-2 fill-tertiary-100 flow-vertical gap-1 height-hug padding-2 width-fill>
+                  <Text fill-text-800 typography-label-nowrap>
+                    Three
+                  </Text>
+                  <Text fill-neutral-600 typography-body-small-wrap>
+                    {LOREM}
+                  </Text>
+                </Frame>
+                <Frame corner-radius-2 fill-positive-100 flow-vertical gap-1 height-hug padding-2 width-fill>
+                  <Text fill-text-800 typography-label-nowrap>
+                    Four
+                  </Text>
+                  <Text fill-neutral-600 typography-body-small-wrap>
+                    Hugs its text.
+                  </Text>
+                </Frame>
               </Frame>
-            </Frame>
-            <Frame
-              alignment-left
-              corner-radius-full
-              fill-neutralsurface-200
-              flow-horizontal
-              gap-0p5
-              height-8
-              padding-left-3
-              width-hug
-            >
-              <Text
-                fill-text-800
-                typography-align-left
-                typography-body-small-wrap
-              >
-                Current chat
-              </Text>
-              <Frame
-                alignment-center
-                corner-radius-full
-                fill-neutralsurface-200
-                flow-horizontal
-                height-8
-                width-8
-              >
-                <Vector
-                  fill-text-500
-                  path="M3.77 4.64 L1.06 7.34 C0.94 7.46 0.8 7.52 0.62 7.52 C0.45 7.52 0.31 7.46 0.19 7.34 C0.06 7.21 0 7.07 0 6.89 C0 6.72 0.06 6.57 0.19 6.45 L2.88 3.75 L0.18 1.07 C0.06 0.95 0 0.8 0 0.62 C0 0.45 0.06 0.3 0.19 0.18 C0.31 0.06 0.45 0 0.63 0 C0.8 0 0.95 0.06 1.07 0.18 L3.77 2.89 L6.45 0.18 C6.57 0.06 6.72 0 6.89 0 C7.06 0 7.21 0.06 7.33 0.18 C7.46 0.31 7.52 0.46 7.52 0.63 C7.52 0.8 7.46 0.95 7.33 1.07 L4.63 3.75 L7.34 6.46 C7.46 6.58 7.52 6.72 7.52 6.9 C7.52 7.07 7.46 7.21 7.34 7.34 C7.21 7.46 7.06 7.53 6.89 7.53 C6.72 7.53 6.57 7.46 6.45 7.34 L3.77 4.64 Z"
-                  viewBox="-6.23 -6.25 20 20"
-                />
-              </Frame>
-            </Frame>
-            <Frame
-              alignment-center
-              corner-radius-full
-              fill-primary-100
-              flow-horizontal
-              gap-1
-              height-8
-              width-8
-            >
-              <Vector
-                fill-primary-700
-                path="M5.75 7.25 L0.75 7.25 C0.54 7.25 0.36 7.18 0.22 7.03 C0.07 6.89 0 6.71 0 6.5 C0 6.29 0.07 6.11 0.22 5.97 C0.36 5.82 0.54 5.75 0.75 5.75 L5.75 5.75 L5.75 0.75 C5.75 0.54 5.82 0.36 5.97 0.22 C6.11 0.07 6.29 0 6.5 0 C6.71 0 6.89 0.07 7.03 0.22 C7.18 0.36 7.25 0.54 7.25 0.75 L7.25 5.75 L12.25 5.75 C12.46 5.75 12.64 5.82 12.78 5.97 C12.93 6.11 13 6.29 13 6.5 C13 6.71 12.93 6.89 12.78 7.03 C12.64 7.18 12.46 7.25 12.25 7.25 L7.25 7.25 L7.25 12.25 C7.25 12.46 7.18 12.64 7.03 12.78 C6.89 12.93 6.71 13 6.5 13 C6.29 13 6.11 12.93 5.97 12.78 C5.82 12.64 5.75 12.46 5.75 12.25 L5.75 7.25 Z"
-                viewBox="-5.5 -5.5 24 24"
-              />
             </Frame>
           </Frame>
-          <Frame
-            alignment-right
-            flow-horizontal
-            height-hug
-            width-hug
-          >
-            <Frame
-              alignment-center
-              corner-radius-full
-              fill-white
-              flow-horizontal
-              gap-1
-              height-8
-              width-8
-            >
-              <Vector
-                fill-text-700
-                path="M4.18 4.97 C4.09 4.94 4.01 4.89 3.93 4.81 L0.18 1.06 C0.07 0.95 0.01 0.8 0 0.63 C-0.01 0.46 0.05 0.31 0.18 0.18 C0.3 0.06 0.45 0 0.62 0 C0.79 0 0.94 0.06 1.06 0.18 L4.46 3.57 L7.85 0.18 C7.97 0.07 8.11 0.01 8.28 0 C8.45 -0.01 8.6 0.05 8.73 0.18 C8.85 0.3 8.91 0.45 8.91 0.62 C8.91 0.8 8.85 0.94 8.73 1.06 L4.98 4.81 C4.91 4.89 4.82 4.94 4.74 4.97 C4.65 5 4.56 5.02 4.46 5.02 C4.36 5.02 4.26 5 4.18 4.97 Z"
-                viewBox="-5.54 -7.2 20 20"
-              />
-            </Frame>
-            <Frame
-              alignment-center
-              corner-radius-full
-              fill-white
-              flow-horizontal
-              gap-1
-              height-8
-              width-8
-            >
-              <Vector
-                fill-text-700
-                path="M1.25 9.58 L3.96 9.58 C4.14 9.58 4.28 9.64 4.4 9.76 C4.52 9.88 4.58 10.03 4.58 10.21 C4.58 10.39 4.52 10.53 4.4 10.65 C4.28 10.77 4.14 10.83 3.96 10.83 L0.75 10.83 C0.54 10.83 0.36 10.76 0.22 10.62 C0.07 10.47 0 10.29 0 10.08 L0 6.88 C0 6.7 0.06 6.55 0.18 6.43 C0.3 6.31 0.45 6.25 0.63 6.25 C0.8 6.25 0.95 6.31 1.07 6.43 C1.19 6.55 1.25 6.7 1.25 6.88 L1.25 9.58 Z M9.58 1.25 L6.88 1.25 C6.7 1.25 6.55 1.19 6.43 1.07 C6.31 0.95 6.25 0.8 6.25 0.62 C6.25 0.45 6.31 0.3 6.43 0.18 C6.55 0.06 6.7 0 6.88 0 L10.08 0 C10.29 0 10.47 0.07 10.62 0.22 C10.76 0.36 10.83 0.54 10.83 0.75 L10.83 3.96 C10.83 4.14 10.77 4.28 10.65 4.4 C10.53 4.52 10.39 4.58 10.21 4.58 C10.03 4.58 9.88 4.52 9.76 4.4 C9.64 4.28 9.58 4.14 9.58 3.96 L9.58 1.25 Z"
-                viewBox="-4.58 -4.58 20 20"
-              />
-            </Frame>
-          </Frame>
-        </Frame>
-        <Frame
-          alignment-top-left
-          fill-neutralsurface-100
-          flow-vertical
-          height-1px
-          width-fill
-        >
-        </Frame>
-      </Frame>
-      <Frame
-        alignment-top-left
-        flow-vertical
-        gap-5
-        height-hug
-        padding-horizontal-3
-        padding-vertical-5
-        width-fill
-      >
-        <Frame
-          alignment-right
-          flow-vertical
-          height-hug
-          padding-left-28
-          width-fill
-        >
-          <Frame
-            alignment-right
-            corner-radius-3
-            fill-neutralsurface-50
-            flow-vertical
-            height-hug
-            padding-horizontal-3
-            padding-vertical-2
-            width-hug
-          >
-            <Text
-              fill-neutral-700
-              typography-align-right
-              typography-body-wrap
-            >
-              Show all tapes mentioning Barack Obama
+          <Frame alignment-center fill-neutralsurface-200 height-8 width-fill>
+            <Text fill-neutral-600 typography-label-small-nowrap>
+              Footer
             </Text>
           </Frame>
         </Frame>
-        <Frame
-          alignment-left
-          flow-vertical
-          height-hug
-          width-fill
-        >
-          <Text
-            fill-neutral-700
-            typography-align-left
-            typography-body-wrap
-          >
-            The user is asking me to find all tapes mentioning Barack Obama in Old interviews, 2025.
-          </Text>
-        </Frame>
-        <Frame
-          alignment-left
-          corner-radius-full
-          flow-horizontal
-          gap-1
-          height-8
-          padding-left-2
-          padding-right-3
-          width-hug
-        >
-          <Vector
-            fill-text-400
-            path="M8.08 11.65 L5.76 9.32 C5.62 9.18 5.45 9.11 5.24 9.11 C5.03 9.11 4.85 9.18 4.7 9.32 C4.56 9.47 4.49 9.64 4.49 9.85 C4.49 10.06 4.56 10.23 4.7 10.38 L7.45 13.12 C7.63 13.3 7.84 13.39 8.08 13.39 C8.32 13.39 8.53 13.3 8.71 13.12 L14.28 7.56 C14.42 7.42 14.49 7.25 14.49 7.04 C14.49 6.83 14.42 6.65 14.28 6.5 C14.13 6.36 13.96 6.29 13.75 6.29 C13.54 6.29 13.37 6.36 13.22 6.5 L8.08 11.65 Z M9.5 19 C8.19 19 6.95 18.75 5.8 18.25 C4.64 17.75 3.63 17.08 2.78 16.22 C1.92 15.37 1.25 14.36 0.75 13.21 C0.25 12.05 0 10.82 0 9.5 C0 8.19 0.25 6.95 0.75 5.8 C1.25 4.64 1.92 3.63 2.78 2.78 C3.63 1.92 4.64 1.25 5.79 0.75 C6.95 0.25 8.18 0 9.5 0 C10.81 0 12.05 0.25 13.2 0.75 C14.36 1.25 15.37 1.92 16.22 2.78 C17.08 3.63 17.75 4.64 18.25 5.79 C18.75 6.95 19 8.18 19 9.5 C19 10.81 18.75 12.05 18.25 13.2 C17.75 14.36 17.08 15.37 16.22 16.22 C15.37 17.08 14.36 17.75 13.21 18.25 C12.05 18.75 10.82 19 9.5 19 Z M9.5 17.5 C11.73 17.5 13.63 16.73 15.18 15.18 C16.73 13.63 17.5 11.73 17.5 9.5 C17.5 7.27 16.73 5.38 15.18 3.83 C13.63 2.28 11.73 1.5 9.5 1.5 C7.27 1.5 5.38 2.28 3.83 3.83 C2.28 5.38 1.5 7.27 1.5 9.5 C1.5 11.73 2.28 13.63 3.83 15.18 C5.38 16.73 7.27 17.5 9.5 17.5 Z"
-            viewBox="-2.5 -2.5 24 24"
-          />
-          <Text
-            fill-text-400
-            typography-align-left
-            typography-body-wrap
-          >
-            Thinking across your archive
-          </Text>
-        </Frame>
-        <Frame
-          alignment-left
-          corner-radius-full
-          flow-horizontal
-          gap-1
-          height-8
-          padding-left-2
-          padding-right-3
-          width-hug
-        >
-          <Vector
-            fill-text-400
-            path="M8.08 11.65 L5.76 9.32 C5.62 9.18 5.45 9.11 5.24 9.11 C5.03 9.11 4.85 9.18 4.7 9.32 C4.56 9.47 4.49 9.64 4.49 9.85 C4.49 10.06 4.56 10.23 4.7 10.38 L7.45 13.12 C7.63 13.3 7.84 13.39 8.08 13.39 C8.32 13.39 8.53 13.3 8.71 13.12 L14.28 7.56 C14.42 7.42 14.49 7.25 14.49 7.04 C14.49 6.83 14.42 6.65 14.28 6.5 C14.13 6.36 13.96 6.29 13.75 6.29 C13.54 6.29 13.37 6.36 13.22 6.5 L8.08 11.65 Z M9.5 19 C8.19 19 6.95 18.75 5.8 18.25 C4.64 17.75 3.63 17.08 2.78 16.22 C1.92 15.37 1.25 14.36 0.75 13.21 C0.25 12.05 0 10.82 0 9.5 C0 8.19 0.25 6.95 0.75 5.8 C1.25 4.64 1.92 3.63 2.78 2.78 C3.63 1.92 4.64 1.25 5.79 0.75 C6.95 0.25 8.18 0 9.5 0 C10.81 0 12.05 0.25 13.2 0.75 C14.36 1.25 15.37 1.92 16.22 2.78 C17.08 3.63 17.75 4.64 18.25 5.79 C18.75 6.95 19 8.18 19 9.5 C19 10.81 18.75 12.05 18.25 13.2 C17.75 14.36 17.08 15.37 16.22 16.22 C15.37 17.08 14.36 17.75 13.21 18.25 C12.05 18.75 10.82 19 9.5 19 Z M9.5 17.5 C11.73 17.5 13.63 16.73 15.18 15.18 C16.73 13.63 17.5 11.73 17.5 9.5 C17.5 7.27 16.73 5.38 15.18 3.83 C13.63 2.28 11.73 1.5 9.5 1.5 C7.27 1.5 5.38 2.28 3.83 3.83 C2.28 5.38 1.5 7.27 1.5 9.5 C1.5 11.73 2.28 13.63 3.83 15.18 C5.38 16.73 7.27 17.5 9.5 17.5 Z"
-            viewBox="-2.5 -2.5 24 24"
-          />
-          <Text
-            fill-text-400
-            typography-align-left
-            typography-body-wrap
-          >
-            Another tool call
-          </Text>
-        </Frame>
-        <Frame
-          alignment-left
-          flow-vertical
-          height-hug
-          width-fill
-        >
-          <Text
-            fill-text-700
-            typography-align-left
-            typography-body-wrap
-          >
-            I found two tapes mentioning Barack Obama in Old interviews, 2025
-          </Text>
-        </Frame>
-        <Frame
-          alignment-left
-          corner-radius-full
-          fill-secondary-50
-          flow-horizontal
-          gap-1
-          height-8
-          padding-left-2
-          padding-right-3
-          width-hug
-        >
-          <Vector
-            fill-secondary-700
-            path="M1.51 14.17 C1.09 14.17 0.73 14.02 0.44 13.73 C0.15 13.44 0 13.08 0 12.66 L0 10.21 C0 10.03 0.06 9.88 0.18 9.76 C0.3 9.64 0.45 9.58 0.63 9.58 C0.8 9.58 0.95 9.64 1.07 9.76 C1.19 9.88 1.25 10.03 1.25 10.21 L1.25 12.66 C1.25 12.72 1.28 12.78 1.33 12.84 C1.38 12.89 1.44 12.92 1.51 12.92 L3.96 12.92 C4.14 12.92 4.28 12.98 4.4 13.1 C4.52 13.22 4.58 13.36 4.58 13.54 C4.58 13.72 4.52 13.87 4.4 13.99 C4.28 14.11 4.14 14.17 3.96 14.17 L1.51 14.17 Z M12.66 14.17 L10.21 14.17 C10.03 14.17 9.88 14.11 9.76 13.99 C9.64 13.87 9.58 13.72 9.58 13.54 C9.58 13.36 9.64 13.22 9.76 13.1 C9.88 12.98 10.03 12.92 10.21 12.92 L12.66 12.92 C12.72 12.92 12.78 12.89 12.84 12.84 C12.89 12.78 12.92 12.72 12.92 12.66 L12.92 10.21 C12.92 10.03 12.98 9.88 13.1 9.76 C13.22 9.64 13.36 9.58 13.54 9.58 C13.72 9.58 13.87 9.64 13.99 9.76 C14.11 9.88 14.17 10.03 14.17 10.21 L14.17 12.66 C14.17 13.08 14.02 13.44 13.73 13.73 C13.44 14.02 13.08 14.17 12.66 14.17 Z M0 3.96 L0 1.51 C0 1.09 0.15 0.73 0.44 0.44 C0.73 0.15 1.09 0 1.51 0 L3.96 0 C4.14 0 4.28 0.06 4.4 0.18 C4.52 0.3 4.58 0.45 4.58 0.63 C4.58 0.8 4.52 0.95 4.4 1.07 C4.28 1.19 4.14 1.25 3.96 1.25 L1.51 1.25 C1.44 1.25 1.38 1.28 1.33 1.33 C1.28 1.38 1.25 1.44 1.25 1.51 L1.25 3.96 C1.25 4.14 1.19 4.28 1.07 4.4 C0.95 4.52 0.8 4.58 0.63 4.58 C0.45 4.58 0.3 4.52 0.18 4.4 C0.06 4.28 0 4.14 0 3.96 Z M12.92 3.96 L12.92 1.51 C12.92 1.44 12.89 1.38 12.84 1.33 C12.78 1.28 12.72 1.25 12.66 1.25 L10.21 1.25 C10.03 1.25 9.88 1.19 9.76 1.07 C9.64 0.95 9.58 0.8 9.58 0.63 C9.58 0.45 9.64 0.3 9.76 0.18 C9.88 0.06 10.03 0 10.21 0 L12.66 0 C13.08 0 13.44 0.15 13.73 0.44 C14.02 0.73 14.17 1.09 14.17 1.51 L14.17 3.96 C14.17 4.14 14.11 4.28 13.99 4.4 C13.87 4.52 13.72 4.58 13.54 4.58 C13.36 4.58 13.22 4.52 13.1 4.4 C12.98 4.28 12.92 4.14 12.92 3.96 Z M5.61 8.56 C5.2 8.16 5 7.67 5 7.08 C5 6.5 5.2 6.01 5.61 5.61 C6.01 5.2 6.5 5 7.08 5 C7.67 5 8.16 5.2 8.56 5.61 C8.97 6.01 9.17 6.5 9.17 7.08 C9.17 7.67 8.97 8.16 8.56 8.56 C8.16 8.97 7.67 9.17 7.08 9.17 C6.5 9.17 6.01 8.97 5.61 8.56 Z"
-            viewBox="-2.92 -2.92 20 20"
-          />
-          <Frame
-            alignment-left
-            flow-horizontal
-            gap-2
-            height-hug
-            width-hug
-          >
-            <Text
-              fill-secondary-700
-              typography-align-left
-              typography-body-small-wrap
-            >
-              President Barack Obama in Conversation with Marc Maron
-            </Text>
-            <Frame
-              alignment-left
-              flow-horizontal
-              height-hug
-              width-hug
-            >
-              <Text
-                fill-secondary-400
-                typography-align-left
-                typography-mono-small-nowrap
-              >
-                03:15
-              </Text>
+      </Section>
+
+      <Section
+        title="19. Deep nesting"
+        note="Ten hug frames, each padding-2, from primary-50 to the innermost text. Then six width-fill levels that should all span the section."
+      >
+        <Frame fill-primary-50 padding-2>
+          <Frame fill-primary-100 padding-2>
+            <Frame fill-primary-200 padding-2>
+              <Frame fill-primary-300 padding-2>
+                <Frame fill-primary-400 padding-2>
+                  <Frame fill-primary-500 padding-2>
+                    <Frame fill-primary-600 padding-2>
+                      <Frame fill-primary-700 padding-2>
+                        <Frame fill-primary-800 padding-2>
+                          <Frame fill-primary-900 padding-2>
+                            <Text fill-white typography-label-small-nowrap>
+                              level 10
+                            </Text>
+                          </Frame>
+                        </Frame>
+                      </Frame>
+                    </Frame>
+                  </Frame>
+                </Frame>
+              </Frame>
             </Frame>
           </Frame>
         </Frame>
-        <Frame
-          alignment-left
-          corner-radius-full
-          fill-secondary-50
-          flow-horizontal
-          gap-1
-          height-8
-          padding-left-2
-          padding-right-3
-          width-hug
-        >
-          <Vector
-            fill-secondary-700
-            path="M1.51 14.17 C1.09 14.17 0.73 14.02 0.44 13.73 C0.15 13.44 0 13.08 0 12.66 L0 10.21 C0 10.03 0.06 9.88 0.18 9.76 C0.3 9.64 0.45 9.58 0.63 9.58 C0.8 9.58 0.95 9.64 1.07 9.76 C1.19 9.88 1.25 10.03 1.25 10.21 L1.25 12.66 C1.25 12.72 1.28 12.78 1.33 12.84 C1.38 12.89 1.44 12.92 1.51 12.92 L3.96 12.92 C4.14 12.92 4.28 12.98 4.4 13.1 C4.52 13.22 4.58 13.36 4.58 13.54 C4.58 13.72 4.52 13.87 4.4 13.99 C4.28 14.11 4.14 14.17 3.96 14.17 L1.51 14.17 Z M12.66 14.17 L10.21 14.17 C10.03 14.17 9.88 14.11 9.76 13.99 C9.64 13.87 9.58 13.72 9.58 13.54 C9.58 13.36 9.64 13.22 9.76 13.1 C9.88 12.98 10.03 12.92 10.21 12.92 L12.66 12.92 C12.72 12.92 12.78 12.89 12.84 12.84 C12.89 12.78 12.92 12.72 12.92 12.66 L12.92 10.21 C12.92 10.03 12.98 9.88 13.1 9.76 C13.22 9.64 13.36 9.58 13.54 9.58 C13.72 9.58 13.87 9.64 13.99 9.76 C14.11 9.88 14.17 10.03 14.17 10.21 L14.17 12.66 C14.17 13.08 14.02 13.44 13.73 13.73 C13.44 14.02 13.08 14.17 12.66 14.17 Z M0 3.96 L0 1.51 C0 1.09 0.15 0.73 0.44 0.44 C0.73 0.15 1.09 0 1.51 0 L3.96 0 C4.14 0 4.28 0.06 4.4 0.18 C4.52 0.3 4.58 0.45 4.58 0.63 C4.58 0.8 4.52 0.95 4.4 1.07 C4.28 1.19 4.14 1.25 3.96 1.25 L1.51 1.25 C1.44 1.25 1.38 1.28 1.33 1.33 C1.28 1.38 1.25 1.44 1.25 1.51 L1.25 3.96 C1.25 4.14 1.19 4.28 1.07 4.4 C0.95 4.52 0.8 4.58 0.63 4.58 C0.45 4.58 0.3 4.52 0.18 4.4 C0.06 4.28 0 4.14 0 3.96 Z M12.92 3.96 L12.92 1.51 C12.92 1.44 12.89 1.38 12.84 1.33 C12.78 1.28 12.72 1.25 12.66 1.25 L10.21 1.25 C10.03 1.25 9.88 1.19 9.76 1.07 C9.64 0.95 9.58 0.8 9.58 0.63 C9.58 0.45 9.64 0.3 9.76 0.18 C9.88 0.06 10.03 0 10.21 0 L12.66 0 C13.08 0 13.44 0.15 13.73 0.44 C14.02 0.73 14.17 1.09 14.17 1.51 L14.17 3.96 C14.17 4.14 14.11 4.28 13.99 4.4 C13.87 4.52 13.72 4.58 13.54 4.58 C13.36 4.58 13.22 4.52 13.1 4.4 C12.98 4.28 12.92 4.14 12.92 3.96 Z M5.61 8.56 C5.2 8.16 5 7.67 5 7.08 C5 6.5 5.2 6.01 5.61 5.61 C6.01 5.2 6.5 5 7.08 5 C7.67 5 8.16 5.2 8.56 5.61 C8.97 6.01 9.17 6.5 9.17 7.08 C9.17 7.67 8.97 8.16 8.56 8.56 C8.16 8.97 7.67 9.17 7.08 9.17 C6.5 9.17 6.01 8.97 5.61 8.56 Z"
-            viewBox="-2.92 -2.92 20 20"
-          />
-          <Frame
-            alignment-left
-            flow-horizontal
-            gap-2
-            height-hug
-            width-hug
-          >
-            <Text
-              fill-secondary-700
-              typography-align-left
-              typography-body-small-wrap
-            >
-              Recording 7, Njalsgade 21
-            </Text>
-            <Frame
-              alignment-left
-              flow-horizontal
-              height-hug
-              width-hug
-            >
-              <Text
-                fill-secondary-400
-                typography-align-left
-                typography-mono-small-nowrap
-              >
-                00:10
-              </Text>
+        <Frame fill-secondary-50 padding-2 width-fill>
+          <Frame fill-secondary-100 padding-2 width-fill>
+            <Frame fill-secondary-200 padding-2 width-fill>
+              <Frame fill-secondary-300 padding-2 width-fill>
+                <Frame fill-secondary-400 padding-2 width-fill>
+                  <Frame alignment-left fill-secondary-700 flow-horizontal gap-2 padding-2 width-fill>
+                    <Frame flow-vertical width-fill>
+                      <Text fill-white typography-body-small-nowrap>
+                        level 6, fill
+                      </Text>
+                    </Frame>
+                    <Frame corner-radius-full fill-white height-4 width-4 />
+                  </Frame>
+                </Frame>
+              </Frame>
             </Frame>
           </Frame>
         </Frame>
-      </Frame>
-      <Frame
-        alignment-top-left
-        fill-neutralsurface-100
-        flow-vertical
-        height-1px
-        width-fill
-      >
-      </Frame>
-      <Frame
-        alignment-left
-        flow-horizontal
-        height-hug
-        width-fill
-      >
-        <Frame
-          alignment-left
-          flow-horizontal
-          height-12
-          padding-horizontal-2
-          width-hug
-        >
-          <Vector
-            fill-text-400
-            path="M0.15 11.85 C0.05 11.75 0 11.63 0 11.5 C0 11.37 0.05 11.25 0.15 11.15 C0.25 11.05 0.37 11 0.5 11 C0.63 11 0.75 11.05 0.85 11.15 C0.95 11.25 1 11.37 1 11.5 C1 11.63 0.95 11.75 0.85 11.85 C0.75 11.95 0.63 12 0.5 12 C0.37 12 0.25 11.95 0.15 11.85 Z M0.15 7.85 C0.05 7.75 0 7.63 0 7.5 C0 7.37 0.05 7.25 0.15 7.15 C0.25 7.05 0.37 7 0.5 7 C0.63 7 0.75 7.05 0.85 7.15 C0.95 7.25 1 7.37 1 7.5 C1 7.63 0.95 7.75 0.85 7.85 C0.75 7.95 0.63 8 0.5 8 C0.37 8 0.25 7.95 0.15 7.85 Z M2.84 16.16 C2.66 15.98 2.58 15.76 2.58 15.5 C2.58 15.24 2.66 15.02 2.84 14.84 C3.02 14.66 3.24 14.58 3.5 14.58 C3.76 14.58 3.98 14.66 4.16 14.84 C4.34 15.02 4.42 15.24 4.42 15.5 C4.42 15.76 4.34 15.98 4.16 16.16 C3.98 16.34 3.76 16.42 3.5 16.42 C3.24 16.42 3.02 16.34 2.84 16.16 Z M2.84 12.16 C2.66 11.98 2.58 11.76 2.58 11.5 C2.58 11.24 2.66 11.02 2.84 10.84 C3.02 10.66 3.24 10.58 3.5 10.58 C3.76 10.58 3.98 10.66 4.16 10.84 C4.34 11.02 4.42 11.24 4.42 11.5 C4.42 11.76 4.34 11.98 4.16 12.16 C3.98 12.34 3.76 12.42 3.5 12.42 C3.24 12.42 3.02 12.34 2.84 12.16 Z M2.84 8.16 C2.66 7.98 2.58 7.76 2.58 7.5 C2.58 7.24 2.66 7.02 2.84 6.84 C3.02 6.66 3.24 6.58 3.5 6.58 C3.76 6.58 3.98 6.66 4.16 6.84 C4.34 7.02 4.42 7.24 4.42 7.5 C4.42 7.76 4.34 7.98 4.16 8.16 C3.98 8.34 3.76 8.42 3.5 8.42 C3.24 8.42 3.02 8.34 2.84 8.16 Z M2.84 4.16 C2.66 3.98 2.58 3.76 2.58 3.5 C2.58 3.24 2.66 3.02 2.84 2.84 C3.02 2.66 3.24 2.58 3.5 2.58 C3.76 2.58 3.98 2.66 4.16 2.84 C4.34 3.02 4.42 3.24 4.42 3.5 C4.42 3.76 4.34 3.98 4.16 4.16 C3.98 4.34 3.76 4.42 3.5 4.42 C3.24 4.42 3.02 4.34 2.84 4.16 Z M6.55 12.45 C6.29 12.19 6.15 11.87 6.15 11.5 C6.15 11.13 6.29 10.81 6.55 10.55 C6.81 10.29 7.13 10.15 7.5 10.15 C7.87 10.15 8.19 10.29 8.45 10.55 C8.71 10.81 8.85 11.13 8.85 11.5 C8.85 11.87 8.71 12.19 8.45 12.45 C8.19 12.71 7.87 12.85 7.5 12.85 C7.13 12.85 6.81 12.71 6.55 12.45 Z M6.55 8.45 C6.29 8.19 6.15 7.87 6.15 7.5 C6.15 7.13 6.29 6.81 6.55 6.55 C6.81 6.29 7.13 6.15 7.5 6.15 C7.87 6.15 8.19 6.29 8.45 6.55 C8.71 6.81 8.85 7.13 8.85 7.5 C8.85 7.87 8.71 8.19 8.45 8.45 C8.19 8.71 7.87 8.85 7.5 8.85 C7.13 8.85 6.81 8.71 6.55 8.45 Z M6.84 16.16 C6.66 15.98 6.58 15.76 6.58 15.5 C6.58 15.24 6.66 15.02 6.84 14.84 C7.02 14.66 7.24 14.58 7.5 14.58 C7.76 14.58 7.98 14.66 8.16 14.84 C8.34 15.02 8.42 15.24 8.42 15.5 C8.42 15.76 8.34 15.98 8.16 16.16 C7.98 16.34 7.76 16.42 7.5 16.42 C7.24 16.42 7.02 16.34 6.84 16.16 Z M6.84 4.16 C6.66 3.98 6.58 3.76 6.58 3.5 C6.58 3.24 6.66 3.02 6.84 2.84 C7.02 2.66 7.24 2.58 7.5 2.58 C7.76 2.58 7.98 2.66 8.16 2.84 C8.34 3.02 8.42 3.24 8.42 3.5 C8.42 3.76 8.34 3.98 8.16 4.16 C7.98 4.34 7.76 4.42 7.5 4.42 C7.24 4.42 7.02 4.34 6.84 4.16 Z M7.15 18.85 C7.05 18.75 7 18.63 7 18.5 C7 18.37 7.05 18.25 7.15 18.15 C7.25 18.05 7.37 18 7.5 18 C7.63 18 7.75 18.05 7.85 18.15 C7.95 18.25 8 18.37 8 18.5 C8 18.63 7.95 18.75 7.85 18.85 C7.75 18.95 7.63 19 7.5 19 C7.37 19 7.25 18.95 7.15 18.85 Z M7.15 0.85 C7.05 0.75 7 0.63 7 0.5 C7 0.37 7.05 0.25 7.15 0.15 C7.25 0.05 7.37 0 7.5 0 C7.63 0 7.75 0.05 7.85 0.15 C7.95 0.25 8 0.37 8 0.5 C8 0.63 7.95 0.75 7.85 0.85 C7.75 0.95 7.63 1 7.5 1 C7.37 1 7.25 0.95 7.15 0.85 Z M10.55 12.45 C10.29 12.19 10.15 11.87 10.15 11.5 C10.15 11.13 10.29 10.81 10.55 10.55 C10.81 10.29 11.13 10.15 11.5 10.15 C11.87 10.15 12.19 10.29 12.45 10.55 C12.71 10.81 12.85 11.13 12.85 11.5 C12.85 11.87 12.71 12.19 12.45 12.45 C12.19 12.71 11.87 12.85 11.5 12.85 C11.13 12.85 10.81 12.71 10.55 12.45 Z M10.55 8.45 C10.29 8.19 10.15 7.87 10.15 7.5 C10.15 7.13 10.29 6.81 10.55 6.55 C10.81 6.29 11.13 6.15 11.5 6.15 C11.87 6.15 12.19 6.29 12.45 6.55 C12.71 6.81 12.85 7.13 12.85 7.5 C12.85 7.87 12.71 8.19 12.45 8.45 C12.19 8.71 11.87 8.85 11.5 8.85 C11.13 8.85 10.81 8.71 10.55 8.45 Z M10.84 16.16 C10.66 15.98 10.58 15.76 10.58 15.5 C10.58 15.24 10.66 15.02 10.84 14.84 C11.02 14.66 11.24 14.58 11.5 14.58 C11.76 14.58 11.98 14.66 12.16 14.84 C12.34 15.02 12.42 15.24 12.42 15.5 C12.42 15.76 12.34 15.98 12.16 16.16 C11.98 16.34 11.76 16.42 11.5 16.42 C11.24 16.42 11.02 16.34 10.84 16.16 Z M10.84 4.16 C10.66 3.98 10.58 3.76 10.58 3.5 C10.58 3.24 10.66 3.02 10.84 2.84 C11.02 2.66 11.24 2.58 11.5 2.58 C11.76 2.58 11.98 2.66 12.16 2.84 C12.34 3.02 12.42 3.24 12.42 3.5 C12.42 3.76 12.34 3.98 12.16 4.16 C11.98 4.34 11.76 4.42 11.5 4.42 C11.24 4.42 11.02 4.34 10.84 4.16 Z M11.15 18.85 C11.05 18.75 11 18.63 11 18.5 C11 18.37 11.05 18.25 11.15 18.15 C11.25 18.05 11.37 18 11.5 18 C11.63 18 11.75 18.05 11.85 18.15 C11.95 18.25 12 18.37 12 18.5 C12 18.63 11.95 18.75 11.85 18.85 C11.75 18.95 11.63 19 11.5 19 C11.37 19 11.25 18.95 11.15 18.85 Z M11.15 0.85 C11.05 0.75 11 0.63 11 0.5 C11 0.37 11.05 0.25 11.15 0.15 C11.25 0.05 11.37 0 11.5 0 C11.63 0 11.75 0.05 11.85 0.15 C11.95 0.25 12 0.37 12 0.5 C12 0.63 11.95 0.75 11.85 0.85 C11.75 0.95 11.63 1 11.5 1 C11.37 1 11.25 0.95 11.15 0.85 Z M14.84 16.16 C14.66 15.98 14.58 15.76 14.58 15.5 C14.58 15.24 14.66 15.02 14.84 14.84 C15.02 14.66 15.24 14.58 15.5 14.58 C15.76 14.58 15.98 14.66 16.16 14.84 C16.34 15.02 16.42 15.24 16.42 15.5 C16.42 15.76 16.34 15.98 16.16 16.16 C15.98 16.34 15.76 16.42 15.5 16.42 C15.24 16.42 15.02 16.34 14.84 16.16 Z M14.84 12.16 C14.66 11.98 14.58 11.76 14.58 11.5 C14.58 11.24 14.66 11.02 14.84 10.84 C15.02 10.66 15.24 10.58 15.5 10.58 C15.76 10.58 15.98 10.66 16.16 10.84 C16.34 11.02 16.42 11.24 16.42 11.5 C16.42 11.76 16.34 11.98 16.16 12.16 C15.98 12.34 15.76 12.42 15.5 12.42 C15.24 12.42 15.02 12.34 14.84 12.16 Z M14.84 8.16 C14.66 7.98 14.58 7.76 14.58 7.5 C14.58 7.24 14.66 7.02 14.84 6.84 C15.02 6.66 15.24 6.58 15.5 6.58 C15.76 6.58 15.98 6.66 16.16 6.84 C16.34 7.02 16.42 7.24 16.42 7.5 C16.42 7.76 16.34 7.98 16.16 8.16 C15.98 8.34 15.76 8.42 15.5 8.42 C15.24 8.42 15.02 8.34 14.84 8.16 Z M14.84 4.16 C14.66 3.98 14.58 3.76 14.58 3.5 C14.58 3.24 14.66 3.02 14.84 2.84 C15.02 2.66 15.24 2.58 15.5 2.58 C15.76 2.58 15.98 2.66 16.16 2.84 C16.34 3.02 16.42 3.24 16.42 3.5 C16.42 3.76 16.34 3.98 16.16 4.16 C15.98 4.34 15.76 4.42 15.5 4.42 C15.24 4.42 15.02 4.34 14.84 4.16 Z M18.15 11.85 C18.05 11.75 18 11.63 18 11.5 C18 11.37 18.05 11.25 18.15 11.15 C18.25 11.05 18.37 11 18.5 11 C18.63 11 18.75 11.05 18.85 11.15 C18.95 11.25 19 11.37 19 11.5 C19 11.63 18.95 11.75 18.85 11.85 C18.75 11.95 18.63 12 18.5 12 C18.37 12 18.25 11.95 18.15 11.85 Z M18.15 7.85 C18.05 7.75 18 7.63 18 7.5 C18 7.37 18.05 7.25 18.15 7.15 C18.25 7.05 18.37 7 18.5 7 C18.63 7 18.75 7.05 18.85 7.15 C18.95 7.25 19 7.37 19 7.5 C19 7.63 18.95 7.75 18.85 7.85 C18.75 7.95 18.63 8 18.5 8 C18.37 8 18.25 7.95 18.15 7.85 Z"
-            viewBox="-2.5 -2.5 24 24"
-          />
+      </Section>
+
+      <Section title="20. Frames without text" note="A bar chart and a checkerboard built only from frames.">
+        <Frame alignment-bottom-left fill-white flow-horizontal gap-1 height-28 padding-2 width-fill>
+          <Frame corner-radius-top-left-1 corner-radius-top-right-1 fill-tertiary-300 height-4 width-fill />
+          <Frame corner-radius-top-left-1 corner-radius-top-right-1 fill-tertiary-400 height-8 width-fill />
+          <Frame corner-radius-top-left-1 corner-radius-top-right-1 fill-tertiary-500 height-12 width-fill />
+          <Frame corner-radius-top-left-1 corner-radius-top-right-1 fill-tertiary-600 height-20 width-fill />
+          <Frame corner-radius-top-left-1 corner-radius-top-right-1 fill-tertiary-700 height-24 width-fill />
+          <Frame corner-radius-top-left-1 corner-radius-top-right-1 fill-tertiary-500 height-16 width-fill />
+          <Frame corner-radius-top-left-1 corner-radius-top-right-1 fill-tertiary-400 height-10 width-fill />
+          <Frame corner-radius-top-left-1 corner-radius-top-right-1 fill-tertiary-300 height-6 width-fill />
         </Frame>
-        <Frame
-          alignment-left
-          flow-horizontal
-          height-12
-          padding-vertical-3
-          width-fill
-        >
-          <Frame
-            fill-black
-            height-5
-            width-1px
-          >
+        <Frame flow-vertical height-hug width-hug>
+          <Frame flow-horizontal>
+            <Frame fill-neutral-700 height-6 width-6 />
+            <Frame fill-white height-6 width-6 />
+            <Frame fill-neutral-700 height-6 width-6 />
+            <Frame fill-white height-6 width-6 />
           </Frame>
-          <Text
-            fill-text-400
-            typography-align-left
-            typography-body-wrap
-          >
-            Ask about Old interviews, 2025…
-          </Text>
-        </Frame>
-        <Frame
-          alignment-right
-          flow-horizontal
-          height-fill
-          padding-left-3
-          padding-right-2
-          width-hug
-        >
-          <Frame
-            alignment-center
-            corner-radius-full
-            fill-primary-100
-            flow-horizontal
-            gap-1
-            height-10
-            width-10
-          >
-            <Vector
-              fill-primary-400
-              path="M2.48 6.09 L5.8 9.41 C5.94 9.55 6.01 9.73 6.02 9.93 C6.02 10.14 5.95 10.32 5.8 10.47 C5.66 10.61 5.48 10.68 5.28 10.68 C5.07 10.68 4.89 10.61 4.75 10.47 L0.26 5.97 C0.16 5.88 0.1 5.78 0.06 5.68 C0.02 5.57 0 5.46 0 5.34 C0 5.22 0.02 5.11 0.06 5 C0.1 4.9 0.16 4.8 0.26 4.71 L4.75 0.21 C4.89 0.07 5.06 0 5.27 0 C5.48 0 5.66 0.07 5.8 0.21 C5.95 0.36 6.02 0.53 6.02 0.74 C6.02 0.95 5.95 1.12 5.8 1.27 L2.48 4.59 L14.82 4.59 C14.91 4.59 14.98 4.56 15.04 4.5 C15.09 4.45 15.12 4.37 15.12 4.28 L15.12 1.34 C15.12 1.13 15.19 0.95 15.34 0.81 C15.48 0.66 15.66 0.59 15.87 0.59 C16.09 0.59 16.26 0.66 16.41 0.81 C16.55 0.95 16.62 1.13 16.62 1.34 L16.62 4.28 C16.62 4.78 16.45 5.21 16.09 5.56 C15.74 5.91 15.31 6.09 14.82 6.09 L2.48 6.09 Z"
-              viewBox="-3.88 -6.66 24 24"
-            />
+          <Frame flow-horizontal>
+            <Frame fill-white height-6 width-6 />
+            <Frame fill-neutral-700 height-6 width-6 />
+            <Frame fill-white height-6 width-6 />
+            <Frame fill-neutral-700 height-6 width-6 />
+          </Frame>
+          <Frame flow-horizontal>
+            <Frame fill-neutral-700 height-6 width-6 />
+            <Frame fill-white height-6 width-6 />
+            <Frame fill-neutral-700 height-6 width-6 />
+            <Frame fill-white height-6 width-6 />
+          </Frame>
+          <Frame flow-horizontal>
+            <Frame fill-white height-6 width-6 />
+            <Frame fill-neutral-700 height-6 width-6 />
+            <Frame fill-white height-6 width-6 />
+            <Frame fill-neutral-700 height-6 width-6 />
           </Frame>
         </Frame>
-      </Frame>
-      <Frame
-        alignment-left
-        flow-horizontal
-        gap-2
-        height-hug
-        padding-bottom-2
-        padding-horizontal-2
-        width-fill
-        wrap
-      >
-        <Frame
-          alignment-left
-          corner-radius-full
-          fill-primary-100
-          flow-horizontal
-          gap-1
-          height-8
-          padding-left-2
-          padding-right-3
-          width-hug
-        >
-          <Vector
-            fill-primary-700
-            path="M7.86 7.86 C8.26 7.45 8.46 6.96 8.46 6.38 C8.46 5.8 8.26 5.3 7.86 4.9 C7.45 4.5 6.96 4.29 6.38 4.29 C5.8 4.29 5.3 4.5 4.9 4.9 C4.5 5.3 4.29 5.8 4.29 6.38 C4.29 6.96 4.5 7.45 4.9 7.86 C5.3 8.26 5.8 8.46 6.38 8.46 C6.96 8.46 7.45 8.26 7.86 7.86 Z M6.38 9.71 C5.45 9.71 4.66 9.39 4.02 8.74 C3.37 8.09 3.04 7.31 3.04 6.38 C3.04 5.45 3.37 4.66 4.02 4.02 C4.66 3.37 5.45 3.04 6.38 3.04 C7.31 3.04 8.09 3.37 8.74 4.02 C9.39 4.66 9.71 5.45 9.71 6.38 C9.71 6.71 9.66 7.04 9.56 7.35 C9.46 7.67 9.31 7.97 9.11 8.24 L10.94 10.06 C11.06 10.18 11.12 10.33 11.12 10.5 C11.12 10.66 11.06 10.81 10.93 10.94 C10.8 11.06 10.65 11.12 10.49 11.13 C10.32 11.13 10.18 11.07 10.05 10.94 L8.24 9.13 C7.97 9.32 7.67 9.47 7.35 9.57 C7.04 9.66 6.71 9.71 6.38 9.71 Z M1.51 14.17 C1.09 14.17 0.73 14.02 0.44 13.73 C0.15 13.44 0 13.08 0 12.66 L0 10.21 C0 10.03 0.06 9.88 0.18 9.76 C0.3 9.64 0.45 9.58 0.63 9.58 C0.8 9.58 0.95 9.64 1.07 9.76 C1.19 9.88 1.25 10.03 1.25 10.21 L1.25 12.66 C1.25 12.72 1.28 12.78 1.33 12.84 C1.38 12.89 1.44 12.92 1.51 12.92 L3.96 12.92 C4.14 12.92 4.28 12.98 4.4 13.1 C4.52 13.22 4.58 13.36 4.58 13.54 C4.58 13.72 4.52 13.87 4.4 13.99 C4.28 14.11 4.14 14.17 3.96 14.17 L1.51 14.17 Z M12.66 14.17 L10.21 14.17 C10.03 14.17 9.88 14.11 9.76 13.99 C9.64 13.87 9.58 13.72 9.58 13.54 C9.58 13.36 9.64 13.22 9.76 13.1 C9.88 12.98 10.03 12.92 10.21 12.92 L12.66 12.92 C12.72 12.92 12.78 12.89 12.84 12.84 C12.89 12.78 12.92 12.72 12.92 12.66 L12.92 10.21 C12.92 10.03 12.98 9.88 13.1 9.76 C13.22 9.64 13.36 9.58 13.54 9.58 C13.72 9.58 13.87 9.64 13.99 9.76 C14.11 9.88 14.17 10.03 14.17 10.21 L14.17 12.66 C14.17 13.08 14.02 13.44 13.73 13.73 C13.44 14.02 13.08 14.17 12.66 14.17 Z M0 3.96 L0 1.51 C0 1.09 0.15 0.73 0.44 0.44 C0.73 0.15 1.09 0 1.51 0 L3.96 0 C4.14 0 4.28 0.06 4.4 0.18 C4.52 0.3 4.58 0.45 4.58 0.63 C4.58 0.8 4.52 0.95 4.4 1.07 C4.28 1.19 4.14 1.25 3.96 1.25 L1.51 1.25 C1.44 1.25 1.38 1.28 1.33 1.33 C1.28 1.38 1.25 1.44 1.25 1.51 L1.25 3.96 C1.25 4.14 1.19 4.28 1.07 4.4 C0.95 4.52 0.8 4.58 0.63 4.58 C0.45 4.58 0.3 4.52 0.18 4.4 C0.06 4.28 0 4.14 0 3.96 Z M12.92 3.96 L12.92 1.51 C12.92 1.44 12.89 1.38 12.84 1.33 C12.78 1.28 12.72 1.25 12.66 1.25 L10.21 1.25 C10.03 1.25 9.88 1.19 9.76 1.07 C9.64 0.95 9.58 0.8 9.58 0.63 C9.58 0.45 9.64 0.3 9.76 0.18 C9.88 0.06 10.03 0 10.21 0 L12.66 0 C13.08 0 13.44 0.15 13.73 0.44 C14.02 0.73 14.17 1.09 14.17 1.51 L14.17 3.96 C14.17 4.14 14.11 4.28 13.99 4.4 C13.87 4.52 13.72 4.58 13.54 4.58 C13.36 4.58 13.22 4.52 13.1 4.4 C12.98 4.28 12.92 4.14 12.92 3.96 Z"
-            viewBox="-2.92 -2.92 20 20"
-          />
-          <Text
-            fill-primary-700
-            typography-align-left
-            typography-body-small-wrap
-          >
-            Old interviews, 2025
-          </Text>
+      </Section>
+
+      <Section title="21. Wrapping card grid" note="Fixed 28-wide cards that wrap onto new rows as the width shrinks.">
+        <Frame alignment-top-left flow-horizontal gap-3 height-hug width-fill wrap>
+          <Frame corner-radius-3 effect-shadow-small fill-white flow-vertical gap-2 height-hug padding-3 width-28>
+            <Frame corner-radius-2 fill-primary-300 height-12 width-fill />
+            <Text fill-text-800 typography-label-nowrap>
+              Alpha
+            </Text>
+            <Text fill-neutral-600 typography-body-small-wrap>
+              One line.
+            </Text>
+          </Frame>
+          <Frame corner-radius-3 effect-shadow-small fill-white flow-vertical gap-2 height-hug padding-3 width-28>
+            <Frame corner-radius-2 fill-secondary-300 height-12 width-fill />
+            <Text fill-text-800 typography-label-nowrap>
+              Beta
+            </Text>
+            <Text fill-neutral-600 typography-body-small-wrap>
+              A couple of lines of text in this card.
+            </Text>
+          </Frame>
+          <Frame corner-radius-3 effect-shadow-small fill-white flow-vertical gap-2 height-hug padding-3 width-28>
+            <Frame corner-radius-2 fill-tertiary-300 height-12 width-fill />
+            <Text fill-text-800 typography-label-nowrap>
+              Gamma
+            </Text>
+            <Text fill-neutral-600 typography-body-small-wrap>
+              Short.
+            </Text>
+          </Frame>
+          <Frame corner-radius-3 effect-shadow-small fill-white flow-vertical gap-2 height-hug padding-3 width-28>
+            <Frame corner-radius-2 fill-positive-300 height-12 width-fill />
+            <Text fill-text-800 typography-label-nowrap>
+              Delta
+            </Text>
+            <Text fill-neutral-600 typography-body-small-wrap>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame corner-radius-3 effect-shadow-small fill-white flow-vertical gap-2 height-hug padding-3 width-28>
+            <Frame corner-radius-2 fill-negative-300 height-12 width-fill />
+            <Text fill-text-800 typography-label-nowrap>
+              Epsilon
+            </Text>
+            <Text fill-neutral-600 typography-body-small-wrap>
+              Last card.
+            </Text>
+          </Frame>
         </Frame>
-      </Frame>
+      </Section>
+      <Section title="22. Vector" note="A 20 x 20 icon path scaled into width- and height- boxes of 5 and 10.">
+        <Frame alignment-bottom-left flow-horizontal gap-4 height-hug width-fill wrap>
+          <Case label="5 x 5">
+            <Vector fill-text-700 height-5 path={MORE_PATH} viewBox="-3.94 -8.75 20 20" width-5 />
+          </Case>
+          <Case label="10 x 10">
+            <Vector fill-text-700 height-10 path={MORE_PATH} viewBox="-3.94 -8.75 20 20" width-10 />
+          </Case>
+        </Frame>
+      </Section>
     </Frame>
   )
 }

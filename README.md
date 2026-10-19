@@ -1,63 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# unison-playground-web
 
-## Getting Started
+A small Next.js site for trying out [unison-components](https://github.com/cllpse/unison-components) on web. How the
+components work, and every flag they take, is documented there.
 
-First, install the dependencies and run the development server:
+## Requirements
 
-```bash
+- [Bun](https://bun.sh) 1.4.3
+- An editor with the TypeScript Native Preview extension (the project uses TypeScript 7)
+
+`bun install` brings in the rest:
+
+- [Next.js](https://nextjs.org) 16 with React 19 and the React Compiler
+- [React Native Web](https://necolas.github.io/react-native-web) 0.21, to render the React Native library in the
+  browser, with React Native 0.87 for its types
+- [react-native-svg](https://github.com/software-mansion/react-native-svg) 15, for `Vector`
+- [Tailwind CSS](https://tailwindcss.com) 4, loaded through `@tailwindcss/turbopack`
+- [Biome](https://biomejs.dev) 2.5 for linting and formatting
+
+## Getting started
+
+```sh
+git submodule update --init
 bun install
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). From the parent [unison](https://github.com/cllpse/unison)
+repository the same scripts run as `bun run playground-web:<script>`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `bun dev` - Next.js dev server
+- `bun run build` / `bun run start` - production build, and serving it
+- `bun run lint` - Biome check
+- `bun run format` - Biome format, writing changes
+- `bun run typecheck` - `tsc --noEmit`
 
-## A note on /unison-components
+## How the playground works
 
-The _./unison-components_ directory is the Frame component library ([cllpse/unison-components](https://github.com/cllpse/unison-components)), included as a git submodule pinned to a specific commit. It is a React Native library rendered on web through React Native Web: `next.config.ts` prefers its `.web.*` files and aliases `react-native` to `react-native-web`. Only `.web.tsx / .web.ts` files are used here.
+The whole site is one page, _src/app/page.tsx_: a fixed suite of sections, one per group of flags (spacing, sizing,
+padding, gap, radius, colors, strokes, shadows, text, alignment, nesting, vectors). Each section is literal JSX with no
+logic, so what you read is what the plugin would generate. The same suite lives in
+[unison-playground-expo](https://github.com/cllpse/unison-playground-expo)'s _App.tsx_; keep the two in step so web and
+native render the same cases.
 
-#### Using /unison-components
+## How the components are wired in
 
-```jsx
-"use client";
+_./unison-components_ is the library as a git submodule. It is a React Native library rendered through React Native Web:
 
-import { Frame } from "@unison";
+- `@unison` is a path alias in _tsconfig.json_ for _unison-components/dist/web_, which exports `Frame`, `Text` and
+  `Vector`. The native entry and shells are excluded from type checking.
+- _next.config.ts_ prefers `.web.*` files and aliases `react-native` to _src/react-native.ts_ (React Native Web plus
+  stubs for native-only exports).
+- _src/app/globals.css_ imports the library's _dist/tailwind.css_, which carries the design tokens as Tailwind theme
+  values. It is generated and committed in the library, so there is no build step here.
+
+Components use React context, so render them from a client component:
+
+```tsx
+"use client"
+
+import { Frame, Text } from "@unison"
+
+export default function Page() {
+  return (
+    <Frame autolayout-vertical gap-4 padding-4 width-fill>
+      <Text fill-black typography-lg>Hello</Text>
+    </Frame>
+  )
+}
 ```
 
-React Native Web components use React context, so they must be rendered from a client component.
+### Updating the library
 
-#### Styling
-
-_src/app/globals.css_ imports the library's _dist/tailwind.css_, which carries its colors as Tailwind theme colors and a safelist of the class names the library builds at runtime. The library generates and commits that file, so there is no build step here.
-
-#### Updating
-
-Only move the submodule pointer when intentionally bumping the library:
+While working on the library, `bun run components:sync-watch:playground-web` in the parent repository copies it into
+_./unison-components_ as you edit. To move the pinned commit:
 
 ```sh
-cd unison-components && git fetch && git checkout origin/main && cd ..
+git -C unison-components pull origin main
+git add unison-components
 ```
-
-If _./unison-components_ is empty, or to discard local changes inside it, reset it to the pinned commit:
-
-```sh
-git submodule update --recursive --init --force
-```
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

@@ -8,7 +8,19 @@ const nextConfig: NextConfig = {
     // The unison-components submodule is a React Native library rendered on web through
     // React Native Web: prefer `.web.*` files (react-native-svg's too, hence transpilePackages) and
     // swap `react-native` for a React Native Web shim with stubs for native-only exports.
-    resolveExtensions: [".web.tsx", ".web.ts", ".web.jsx", ".web.js", ".web.mjs", ".tsx", ".ts", ".jsx", ".js", ".mjs", ".json"],
+    resolveExtensions: [
+      ".web.tsx",
+      ".web.ts",
+      ".web.jsx",
+      ".web.js",
+      ".web.mjs",
+      ".tsx",
+      ".ts",
+      ".jsx",
+      ".js",
+      ".mjs",
+      ".json",
+    ],
     resolveAlias: {
       "react-native": "./src/react-native.ts",
       "@react-native/assets-registry/registry": "react-native-web/dist/modules/AssetRegistry",

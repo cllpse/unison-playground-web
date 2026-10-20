@@ -3,6 +3,12 @@
 A small Next.js site for trying out [unison-components](https://github.com/cllpse/unison-components) on web. How the
 components work, and every flag they take, is documented there.
 
+Part of [Unison](https://github.com/cllpse/unison), alongside
+[unison-components](https://github.com/cllpse/unison-components),
+[unison-plugin](https://github.com/cllpse/unison-plugin),
+[unison-playground-expo](https://github.com/cllpse/unison-playground-expo) and
+[unison-website](https://github.com/cllpse/unison-website).
+
 ## Requirements
 
 - [Bun](https://bun.sh) 1.4.3

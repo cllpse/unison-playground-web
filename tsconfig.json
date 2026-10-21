@@ -24,10 +24,11 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts", "**/*.mts"],
-  // Leave out the library's native entry and shells, and its Bun build scripts.
+  // Leave out the library's native entries and shells, and its Bun build scripts.
   "exclude": [
     "node_modules",
     "unison-components/dist/native.ts",
+    "unison-components/dist/uniwind-motion.ts",
     "unison-components/src/native",
     "unison-components/scripts"
   ]

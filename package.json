@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "bake": "BAKE_BASE_PATH=/unison/one-shot next build",
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write",

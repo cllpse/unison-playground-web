@@ -1,7 +1,11 @@
 import type { NextConfig } from "next"
 
+// `bun run bake` sets BAKE_BASE_PATH to export the app as static files (out/), each route as a folder with an
+// index.html, served from that path; the website's deploy publishes the one-shot pages from there.
+const bakeBasePath = process.env.BAKE_BASE_PATH
+
 const nextConfig: NextConfig = {
-  /* config options here */
+  ...(bakeBasePath ? { output: "export", basePath: bakeBasePath, trailingSlash: true } : {}),
   reactCompiler: true,
   transpilePackages: ["react-native-svg"],
   turbopack: {

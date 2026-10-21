@@ -38,6 +38,8 @@ repository the same scripts run as `bun run playground-web:<script>`.
 
 - `bun dev` - Next.js dev server
 - `bun run build` / `bun run start` - production build, and serving it
+- `bun run bake` - static export into `out/`, served from `/unison/one-shot` (the website's deploy publishes the
+  shadcn, Reddit and Google pages from it)
 - `bun run lint` - Biome check
 - `bun run format` - Biome format, writing changes
 - `bun run typecheck` - `tsc --noEmit`

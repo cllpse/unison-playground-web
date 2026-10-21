@@ -19,3 +19,5 @@ A small Next.js site for trying out the unison-components library on web.
 - `bun run typecheck`: `tsc --noEmit`; must pass before committing
 - `bunx biome check --write .`: format, lint and organize imports; must pass before committing
 - `bun run build`: production build; run it before pushing
+- `bun run bake`: static export into `out/` under the `/unison/one-shot` base path (`BAKE_BASE_PATH` in
+  `next.config.ts`); the website's deploy copies the one-shot pages from it

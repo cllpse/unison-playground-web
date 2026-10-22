@@ -1181,9 +1181,9 @@ export default () => {
               </Frame>
             </Frame>
             <Frame autolayout-vertical gap-1p5 height-hug width-fill>
-              <Frame corner-radius-full fill-neutral-200 tailwind-animate-pulse height-2 width-full />
-              <Frame corner-radius-full fill-neutral-200 tailwind-animate-pulse height-2 width-48 />
-              <Frame corner-radius-full fill-neutral-200 tailwind-animate-pulse height-2 width-32 />
+              <Frame corner-radius-full fill-neutral-200 animate-pulse height-2 width-full />
+              <Frame corner-radius-full fill-neutral-200 animate-pulse height-2 width-48 />
+              <Frame corner-radius-full fill-neutral-200 animate-pulse height-2 width-32 />
             </Frame>
             <Frame corner-radius-2xl stroke-neutral-200 autolayout-vertical gap-3 height-hug padding-3 width-fill>
               <Text fill-neutral-400 typography-sm>

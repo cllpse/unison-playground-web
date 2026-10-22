@@ -123,7 +123,7 @@ export default () => {
   return (
     <Frame fill-white autolayout-vertical gap-10 height-hug padding-6 width-fill>
       <Frame autolayout-vertical gap-1 height-hug width-fill>
-        <Text fill-black typography-3xl>
+        <Text fill-black typography-2xl>
           Frame, Text and Vector test suite
         </Text>
         <Text fill-neutral-500 typography-sm>
@@ -331,6 +331,36 @@ export default () => {
           <Frame fill-neutral-900 height-4 width-px />
           <Frame fill-red-500 height-hug width-hug />
           <Frame fill-neutral-900 height-4 width-px />
+        </Frame>
+        <Caption>
+          Four fixed 20s in a 64-wide frame: they overflow without wrap, and wrap onto a second row with it
+        </Caption>
+        <Frame fill-white autolayout-horizontal gap-2 height-hug padding-2 width-64>
+          <Frame fill-violet-600 height-8 width-20 />
+          <Frame fill-violet-500 height-8 width-20 />
+          <Frame fill-violet-400 height-8 width-20 />
+          <Frame fill-violet-300 height-8 width-20 />
+        </Frame>
+        <Frame fill-white autolayout-horizontal gap-2 height-hug padding-2 width-64 wrap>
+          <Frame fill-violet-600 height-8 width-20 />
+          <Frame fill-violet-500 height-8 width-20 />
+          <Frame fill-violet-400 height-8 width-20 />
+          <Frame fill-violet-300 height-8 width-20 />
+        </Frame>
+        <Caption>A hug frame of long text inside a 48-wide frame wraps at its parent's width</Caption>
+        <Frame fill-white autolayout-vertical padding-2 width-48>
+          <Frame fill-amber-100 height-hug padding-2 width-hug>
+            <Text fill-black typography-sm>
+              {LOREM}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>Fill children in a vertical flow of fixed height share it: fixed 6 | fill | fill | fixed 6</Caption>
+        <Frame fill-white autolayout-vertical gap-1 height-40 padding-2 width-24>
+          <Frame fill-teal-700 height-6 width-fill />
+          <Frame fill-teal-400 height-fill width-fill />
+          <Frame fill-teal-200 height-fill width-fill />
+          <Frame fill-teal-700 height-6 width-fill />
         </Frame>
       </Section>
 
@@ -611,6 +641,11 @@ export default () => {
           </Case>
           <Case label="vertical-px horizontal-0p5">
             <Frame fill-sky-200 padding-horizontal-0p5 padding-vertical-px>
+              <Frame fill-sky-700 height-8 width-8 />
+            </Frame>
+          </Case>
+          <Case label="vertical-2 horizontal-6">
+            <Frame fill-sky-200 padding-horizontal-6 padding-vertical-2>
               <Frame fill-sky-700 height-8 width-8 />
             </Frame>
           </Case>
@@ -981,6 +1016,17 @@ export default () => {
           </Case>
           <Case label="bottom-right-2xl">
             <Frame corner-radius-bottom-right-2xl fill-indigo-300 height-16 width-16 />
+          </Case>
+          <Case label="four corners: none, md, 2xl, full">
+            <Frame
+              corner-radius-bottom-left-full
+              corner-radius-bottom-right-2xl
+              corner-radius-top-left-none
+              corner-radius-top-right-md
+              fill-indigo-300
+              height-16
+              width-16
+            />
           </Case>
           <Case label="sm, top-left-full">
             <Frame corner-radius-sm corner-radius-top-left-full fill-indigo-300 height-16 width-16 />
@@ -1662,6 +1708,46 @@ export default () => {
             <Frame corner-radius-full height-10 stroke-neutral-900 width-10 />
           </Case>
         </Cases>
+        <Caption>stroke-style-solid and stroke-style-dashed on round frames, a chip and a hover stroke</Caption>
+        <Cases>
+          <Case label="solid, full">
+            <Frame corner-radius-full fill-white height-10 stroke-sky-500 stroke-style-solid width-10 />
+          </Case>
+          <Case label="dashed, full">
+            <Frame corner-radius-full fill-white height-10 stroke-sky-500 stroke-style-dashed width-10 />
+          </Case>
+          <Case label="dashed, no stroke color">
+            <Frame corner-radius-md fill-white height-10 stroke-style-dashed width-10 />
+          </Case>
+          <Case label="dashed chip">
+            <Frame
+              corner-radius-full
+              fill-white
+              padding-horizontal-3
+              padding-vertical-1
+              stroke-rose-500
+              stroke-style-dashed
+            >
+              <Text fill-rose-600 typography-xs>
+                draft
+              </Text>
+            </Frame>
+          </Case>
+          <Case label="dashed, stroke-hover">
+            <Frame
+              corner-radius-lg
+              fill-white
+              height-12
+              stroke-hover-violet-600
+              stroke-neutral-300
+              stroke-style-dashed
+              width-12
+            />
+          </Case>
+          <Case label="stroke-transparent">
+            <Frame corner-radius-md fill-neutral-200 height-10 stroke-transparent width-10 />
+          </Case>
+        </Cases>
       </Section>
 
       <Section
@@ -1772,7 +1858,7 @@ export default () => {
         </Frame>
       </Section>
 
-      <Section title="13. Text sizes" note="Every typography size with its token font size.">
+      <Section title="13. Text sizes" note="Every typography size from xs to 2xl with its token font size.">
         <Text fill-black typography-xs>
           xs 12px {PANGRAM}
         </Text>
@@ -1790,27 +1876,6 @@ export default () => {
         </Text>
         <Text fill-black typography-2xl>
           2xl 24px {PANGRAM}
-        </Text>
-        <Text fill-black typography-3xl>
-          3xl 30px {PANGRAM}
-        </Text>
-        <Text fill-black typography-4xl>
-          4xl 36px {PANGRAM}
-        </Text>
-        <Text fill-black typography-5xl>
-          5xl 48px {PANGRAM}
-        </Text>
-        <Text fill-black typography-6xl>
-          6xl 60px {PANGRAM}
-        </Text>
-        <Text fill-black typography-7xl>
-          7xl 72px {PANGRAM}
-        </Text>
-        <Text fill-black typography-8xl>
-          8xl 96px {PANGRAM}
-        </Text>
-        <Text fill-black typography-9xl>
-          9xl 128px {PANGRAM}
         </Text>
       </Section>
 
@@ -1903,111 +1968,6 @@ export default () => {
             </Frame>
             <Frame fill-white autolayout-vertical padding-2 width-fill>
               <Text fill-black typography-2xl>
-                {LOREM}
-              </Text>
-            </Frame>
-          </Frame>
-        </Frame>
-        <Frame autolayout-vertical gap-1 height-hug width-fill>
-          <Caption>3xl</Caption>
-          <Frame alignment-top-left autolayout-horizontal gap-2 height-hug width-fill>
-            <Frame fill-white autolayout-vertical padding-2 width-32>
-              <Text fill-black typography-3xl>
-                {PANGRAM}
-              </Text>
-            </Frame>
-            <Frame fill-white autolayout-vertical padding-2 width-fill>
-              <Text fill-black typography-3xl>
-                {LOREM}
-              </Text>
-            </Frame>
-          </Frame>
-        </Frame>
-        <Frame autolayout-vertical gap-1 height-hug width-fill>
-          <Caption>4xl</Caption>
-          <Frame alignment-top-left autolayout-horizontal gap-2 height-hug width-fill>
-            <Frame fill-white autolayout-vertical padding-2 width-32>
-              <Text fill-black typography-4xl>
-                {PANGRAM}
-              </Text>
-            </Frame>
-            <Frame fill-white autolayout-vertical padding-2 width-fill>
-              <Text fill-black typography-4xl>
-                {LOREM}
-              </Text>
-            </Frame>
-          </Frame>
-        </Frame>
-        <Frame autolayout-vertical gap-1 height-hug width-fill>
-          <Caption>5xl</Caption>
-          <Frame alignment-top-left autolayout-horizontal gap-2 height-hug width-fill>
-            <Frame fill-white autolayout-vertical padding-2 width-32>
-              <Text fill-black typography-5xl>
-                {PANGRAM}
-              </Text>
-            </Frame>
-            <Frame fill-white autolayout-vertical padding-2 width-fill>
-              <Text fill-black typography-5xl>
-                {LOREM}
-              </Text>
-            </Frame>
-          </Frame>
-        </Frame>
-        <Frame autolayout-vertical gap-1 height-hug width-fill>
-          <Caption>6xl</Caption>
-          <Frame alignment-top-left autolayout-horizontal gap-2 height-hug width-fill>
-            <Frame fill-white autolayout-vertical padding-2 width-32>
-              <Text fill-black typography-6xl>
-                {PANGRAM}
-              </Text>
-            </Frame>
-            <Frame fill-white autolayout-vertical padding-2 width-fill>
-              <Text fill-black typography-6xl>
-                {LOREM}
-              </Text>
-            </Frame>
-          </Frame>
-        </Frame>
-        <Frame autolayout-vertical gap-1 height-hug width-fill>
-          <Caption>7xl</Caption>
-          <Frame alignment-top-left autolayout-horizontal gap-2 height-hug width-fill>
-            <Frame fill-white autolayout-vertical padding-2 width-32>
-              <Text fill-black typography-7xl>
-                {PANGRAM}
-              </Text>
-            </Frame>
-            <Frame fill-white autolayout-vertical padding-2 width-fill>
-              <Text fill-black typography-7xl>
-                {LOREM}
-              </Text>
-            </Frame>
-          </Frame>
-        </Frame>
-        <Frame autolayout-vertical gap-1 height-hug width-fill>
-          <Caption>8xl</Caption>
-          <Frame alignment-top-left autolayout-horizontal gap-2 height-hug width-fill>
-            <Frame fill-white autolayout-vertical padding-2 width-32>
-              <Text fill-black typography-8xl>
-                {PANGRAM}
-              </Text>
-            </Frame>
-            <Frame fill-white autolayout-vertical padding-2 width-fill>
-              <Text fill-black typography-8xl>
-                {LOREM}
-              </Text>
-            </Frame>
-          </Frame>
-        </Frame>
-        <Frame autolayout-vertical gap-1 height-hug width-fill>
-          <Caption>9xl</Caption>
-          <Frame alignment-top-left autolayout-horizontal gap-2 height-hug width-fill>
-            <Frame fill-white autolayout-vertical padding-2 width-32>
-              <Text fill-black typography-9xl>
-                {PANGRAM}
-              </Text>
-            </Frame>
-            <Frame fill-white autolayout-vertical padding-2 width-fill>
-              <Text fill-black typography-9xl>
                 {LOREM}
               </Text>
             </Frame>
@@ -2453,9 +2413,9 @@ export default () => {
               <Vector fill-blue-600 height-px path={CHECK_PATH} viewBox="0 0 18 16" width-px />
             </Frame>
           </Case>
-          <Case label="96 x 24">
+          <Case label="64 x 16">
             <Frame stroke-neutral-400 width-hug>
-              <Vector fill-blue-600 height-24 path={MORE_PATH} viewBox="0 0 12.12 2.5" width-96 />
+              <Vector fill-blue-600 height-16 path={MORE_PATH} viewBox="0 0 12.12 2.5" width-64 />
             </Frame>
           </Case>
         </Cases>
@@ -2477,6 +2437,14 @@ export default () => {
           </Case>
           <Case label="no fill">
             <Vector fillRule="evenodd" height-12 path={RING_PATH} viewBox="0 0 24 24" width-12 />
+          </Case>
+          <Case label="fill-currentcolor">
+            <Vector fill-currentcolor fillRule="evenodd" height-12 path={RING_PATH} viewBox="0 0 24 24" width-12 />
+          </Case>
+          <Case label="fill-transparent">
+            <Frame stroke-neutral-400 width-hug>
+              <Vector fill-transparent fillRule="evenodd" height-12 path={RING_PATH} viewBox="0 0 24 24" width-12 />
+            </Frame>
           </Case>
         </Cases>
         <Caption>
@@ -2500,19 +2468,537 @@ export default () => {
         note="The animations from motion-tokens.css on a Frame: CSS on web, Reanimated on iOS and Android through unison-components/uniwind-motion."
       >
         <Cases>
-          <Case label="tailwind-animate-spin">
-            <Frame corner-radius-sm fill-violet-600 height-8 tailwind-animate-spin width-8 />
+          <Case label="animate-spin">
+            <Frame animate-spin corner-radius-sm fill-violet-600 height-8 width-8 />
           </Case>
-          <Case label="tailwind-animate-ping">
-            <Frame corner-radius-full fill-violet-600 height-8 tailwind-animate-ping width-8 />
+          <Case label="animate-ping">
+            <Frame animate-ping corner-radius-full fill-violet-600 height-8 width-8 />
           </Case>
-          <Case label="tailwind-animate-pulse">
-            <Frame corner-radius-sm fill-violet-600 height-8 tailwind-animate-pulse width-8 />
+          <Case label="animate-pulse">
+            <Frame animate-pulse corner-radius-sm fill-violet-600 height-8 width-8 />
           </Case>
-          <Case label="tailwind-animate-bounce">
-            <Frame corner-radius-full fill-violet-600 height-8 tailwind-animate-bounce width-8 />
+          <Case label="animate-bounce">
+            <Frame animate-bounce corner-radius-full fill-violet-600 height-8 width-8 />
           </Case>
         </Cases>
+      </Section>
+
+      <Section
+        title="20. Text decoration"
+        note="typography-decoration-underline at several sizes and colors, on wrapping text, aligned text and hover text."
+      >
+        <Frame autolayout-vertical gap-2 height-hug width-fill>
+          <Text fill-black typography-decoration-underline typography-xs>
+            xs underlined
+          </Text>
+          <Text fill-black typography-decoration-underline typography-base>
+            base underlined
+          </Text>
+          <Text fill-black typography-2xl typography-decoration-underline>
+            2xl underlined
+          </Text>
+          <Text fill-blue-600 typography-decoration-underline typography-sm>
+            A link-colored underline in blue-600
+          </Text>
+          <Text fill-blue-600 fill-hover-blue-900 typography-decoration-underline typography-sm>
+            Hover this link on web
+          </Text>
+        </Frame>
+        <Caption>Underlined text wrapping in a 48-wide frame, then centered in a fill frame</Caption>
+        <Frame fill-white autolayout-vertical padding-2 width-48>
+          <Text fill-black typography-decoration-underline typography-sm>
+            {PANGRAM} {PANGRAM}
+          </Text>
+        </Frame>
+        <Frame fill-white autolayout-vertical padding-2 width-fill>
+          <Text fill-black typography-align-center typography-decoration-underline typography-sm>
+            {LOREM}
+          </Text>
+        </Frame>
+        <Caption>An underlined word inside a sentence, and an underlined label in a tailwind-group button</Caption>
+        <Frame alignment-left autolayout-horizontal gap-1 height-hug width-fill wrap>
+          <Text fill-black typography-sm>
+            Read the
+          </Text>
+          <Text fill-violet-700 typography-decoration-underline typography-sm>
+            design tokens
+          </Text>
+          <Text fill-black typography-sm>
+            before adding a flag.
+          </Text>
+        </Frame>
+        <Frame
+          corner-radius-md
+          fill-hover-violet-700
+          fill-violet-100
+          padding-horizontal-3
+          padding-vertical-2
+          tailwind-group
+        >
+          <Text
+            fill-hover-white
+            fill-violet-900
+            tailwind-group-hover-fill
+            typography-decoration-underline
+            typography-sm
+          >
+            Hover the button
+          </Text>
+        </Frame>
+      </Section>
+
+      <Section
+        title="21. Transitions"
+        note="Hover each box on web: transition-colors animates the fill swap. Durations, then easings at 500, then delays at 300. Native has no hover, so it shows the resting state."
+      >
+        <Caption>transition-duration-0 to 1000</Caption>
+        <Cases>
+          <Case label="0">
+            <Frame
+              corner-radius-lg
+              fill-hover-emerald-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-duration-0
+              width-12
+            />
+          </Case>
+          <Case label="75">
+            <Frame
+              corner-radius-lg
+              fill-hover-emerald-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-duration-75
+              width-12
+            />
+          </Case>
+          <Case label="100">
+            <Frame
+              corner-radius-lg
+              fill-hover-emerald-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-duration-100
+              width-12
+            />
+          </Case>
+          <Case label="150">
+            <Frame
+              corner-radius-lg
+              fill-hover-emerald-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-duration-150
+              width-12
+            />
+          </Case>
+          <Case label="200">
+            <Frame
+              corner-radius-lg
+              fill-hover-emerald-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-duration-200
+              width-12
+            />
+          </Case>
+          <Case label="300">
+            <Frame
+              corner-radius-lg
+              fill-hover-emerald-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-duration-300
+              width-12
+            />
+          </Case>
+          <Case label="500">
+            <Frame
+              corner-radius-lg
+              fill-hover-emerald-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-duration-500
+              width-12
+            />
+          </Case>
+          <Case label="700">
+            <Frame
+              corner-radius-lg
+              fill-hover-emerald-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-duration-700
+              width-12
+            />
+          </Case>
+          <Case label="1000">
+            <Frame
+              corner-radius-lg
+              fill-hover-emerald-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-duration-1000
+              width-12
+            />
+          </Case>
+          <Case label="no duration (150)">
+            <Frame corner-radius-lg fill-hover-emerald-600 fill-neutral-200 height-12 transition-colors width-12 />
+          </Case>
+          <Case label="no transition">
+            <Frame corner-radius-lg fill-hover-emerald-600 fill-neutral-200 height-12 width-12 />
+          </Case>
+        </Cases>
+        <Caption>transition-easing- at duration-500</Caption>
+        <Cases>
+          <Case label="linear">
+            <Frame
+              corner-radius-lg
+              fill-hover-sky-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-duration-500
+              transition-easing-linear
+              width-12
+            />
+          </Case>
+          <Case label="in">
+            <Frame
+              corner-radius-lg
+              fill-hover-sky-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-duration-500
+              transition-easing-in
+              width-12
+            />
+          </Case>
+          <Case label="out">
+            <Frame
+              corner-radius-lg
+              fill-hover-sky-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-duration-500
+              transition-easing-out
+              width-12
+            />
+          </Case>
+          <Case label="in-out">
+            <Frame
+              corner-radius-lg
+              fill-hover-sky-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-duration-500
+              transition-easing-in-out
+              width-12
+            />
+          </Case>
+        </Cases>
+        <Caption>transition-delay- at duration-300</Caption>
+        <Cases>
+          <Case label="0">
+            <Frame
+              corner-radius-lg
+              fill-hover-rose-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-delay-0
+              transition-duration-300
+              width-12
+            />
+          </Case>
+          <Case label="75">
+            <Frame
+              corner-radius-lg
+              fill-hover-rose-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-delay-75
+              transition-duration-300
+              width-12
+            />
+          </Case>
+          <Case label="100">
+            <Frame
+              corner-radius-lg
+              fill-hover-rose-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-delay-100
+              transition-duration-300
+              width-12
+            />
+          </Case>
+          <Case label="150">
+            <Frame
+              corner-radius-lg
+              fill-hover-rose-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-delay-150
+              transition-duration-300
+              width-12
+            />
+          </Case>
+          <Case label="200">
+            <Frame
+              corner-radius-lg
+              fill-hover-rose-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-delay-200
+              transition-duration-300
+              width-12
+            />
+          </Case>
+          <Case label="300">
+            <Frame
+              corner-radius-lg
+              fill-hover-rose-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-delay-300
+              transition-duration-300
+              width-12
+            />
+          </Case>
+          <Case label="500">
+            <Frame
+              corner-radius-lg
+              fill-hover-rose-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-delay-500
+              transition-duration-300
+              width-12
+            />
+          </Case>
+          <Case label="700">
+            <Frame
+              corner-radius-lg
+              fill-hover-rose-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-delay-700
+              transition-duration-300
+              width-12
+            />
+          </Case>
+          <Case label="1000">
+            <Frame
+              corner-radius-lg
+              fill-hover-rose-600
+              fill-neutral-200
+              height-12
+              transition-colors
+              transition-delay-1000
+              transition-duration-300
+              width-12
+            />
+          </Case>
+        </Cases>
+        <Caption>Stroke and group transitions, and the properties that have no hover state to animate</Caption>
+        <Cases>
+          <Case label="colors on stroke-hover">
+            <Frame
+              corner-radius-lg
+              fill-white
+              height-12
+              stroke-hover-violet-600
+              stroke-neutral-300
+              transition-colors
+              transition-duration-300
+              width-12
+            />
+          </Case>
+          <Case label="colors on a group button">
+            <Frame
+              corner-radius-full
+              fill-hover-neutral-900
+              fill-neutral-100
+              padding-horizontal-4
+              padding-vertical-2
+              tailwind-group
+              transition-colors
+              transition-duration-300
+            >
+              <Text fill-hover-white fill-neutral-900 tailwind-group-hover-fill typography-sm>
+                Hover me
+              </Text>
+            </Frame>
+          </Case>
+          <Case label="transition-opacity">
+            <Frame corner-radius-lg fill-amber-400 height-12 transition-duration-300 transition-opacity width-12 />
+          </Case>
+          <Case label="transition-shadow">
+            <Frame
+              corner-radius-lg
+              effect-shadow-md
+              fill-white
+              height-12
+              transition-duration-300
+              transition-shadow
+              width-12
+            />
+          </Case>
+          <Case label="transition-transform">
+            <Frame corner-radius-lg fill-amber-600 height-12 transition-duration-300 transition-transform width-12 />
+          </Case>
+        </Cases>
+      </Section>
+
+      <Section
+        title="22. Pointer events"
+        note="Hover each box on web: pointer-events-none stops a frame reacting to the pointer, pointer-events-auto turns it back on for a child."
+      >
+        <Cases>
+          <Case label="auto">
+            <Frame corner-radius-lg fill-hover-red-500 fill-neutral-200 height-12 pointer-events-auto width-12 />
+          </Case>
+          <Case label="none">
+            <Frame corner-radius-lg fill-hover-red-500 fill-neutral-200 height-12 pointer-events-none width-12 />
+          </Case>
+          <Case label="none parent, auto child">
+            <Frame
+              alignment-center
+              corner-radius-lg
+              fill-hover-red-200
+              fill-neutral-200
+              height-16
+              pointer-events-none
+              width-16
+            >
+              <Frame corner-radius-md fill-hover-red-500 fill-neutral-400 height-8 pointer-events-auto width-8 />
+            </Frame>
+          </Case>
+          <Case label="none on a group">
+            <Frame corner-radius-lg fill-hover-neutral-900 fill-white padding-3 pointer-events-none tailwind-group>
+              <Text fill-hover-white fill-neutral-900 tailwind-group-hover-fill typography-sm>
+                No hover
+              </Text>
+            </Frame>
+          </Case>
+        </Cases>
+      </Section>
+
+      <Section
+        title="23. Text truncation"
+        note="typography-settings-truncate keeps text to one line and ends it with an ellipsis where its frame runs out. No wrap here: the overflow is the test."
+      >
+        <Caption>The same text in a fill frame, without and with truncate</Caption>
+        <Frame fill-white autolayout-vertical gap-2 padding-2 width-fill>
+          <Text fill-black typography-sm>
+            {LOREM}
+          </Text>
+          <Text fill-black typography-settings-truncate typography-sm>
+            {LOREM}
+          </Text>
+        </Frame>
+        <Caption>Every size up to 2xl, truncated in a 32-wide frame</Caption>
+        <Frame fill-white autolayout-vertical gap-1 padding-2 width-32>
+          <Text fill-black typography-settings-truncate typography-xs>
+            {PANGRAM}
+          </Text>
+          <Text fill-black typography-settings-truncate typography-sm>
+            {PANGRAM}
+          </Text>
+          <Text fill-black typography-base typography-settings-truncate>
+            {PANGRAM}
+          </Text>
+          <Text fill-black typography-lg typography-settings-truncate>
+            {PANGRAM}
+          </Text>
+          <Text fill-black typography-settings-truncate typography-xl>
+            {PANGRAM}
+          </Text>
+          <Text fill-black typography-2xl typography-settings-truncate>
+            {PANGRAM}
+          </Text>
+        </Frame>
+        <Caption>Short text that fits shows no ellipsis, and an unbroken word is cut off too</Caption>
+        <Frame alignment-top-left autolayout-horizontal gap-2 height-hug width-fill>
+          <Frame fill-white autolayout-vertical padding-2 width-32>
+            <Text fill-black typography-settings-truncate typography-sm>
+              Fits
+            </Text>
+          </Frame>
+          <Frame fill-white autolayout-vertical padding-2 width-32>
+            <Text fill-black typography-settings-truncate typography-sm>
+              {UNBROKEN}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>
+          A list row: a fixed avatar, a fill column with a truncated title and subtitle, and a hug label
+        </Caption>
+        <Frame alignment-left fill-white autolayout-horizontal gap-3 height-hug padding-3 width-fill>
+          <Frame corner-radius-full fill-violet-400 height-10 width-10 />
+          <Frame autolayout-vertical gap-0p5 height-hug width-fill>
+            <Text fill-black typography-base typography-settings-truncate>
+              {PANGRAM} {PANGRAM}
+            </Text>
+            <Text fill-neutral-500 typography-settings-truncate typography-sm>
+              {LOREM}
+            </Text>
+          </Frame>
+          <Frame corner-radius-full fill-violet-100 padding-horizontal-2 padding-vertical-0p5>
+            <Text fill-violet-900 typography-xs>
+              New
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>A hug frame of truncated text inside a 48-wide frame stops at its parent's width</Caption>
+        <Frame fill-white autolayout-vertical padding-2 width-48>
+          <Frame fill-amber-100 height-hug padding-2 width-hug>
+            <Text fill-black typography-settings-truncate typography-sm>
+              {LOREM}
+            </Text>
+          </Frame>
+        </Frame>
+        <Caption>Truncated with each typography-align- flag, underlined, and in a chip</Caption>
+        <Frame fill-white autolayout-vertical gap-1 padding-2 width-48>
+          <Text fill-black typography-align-left typography-settings-truncate typography-sm>
+            {PANGRAM}
+          </Text>
+          <Text fill-black typography-align-center typography-settings-truncate typography-sm>
+            {PANGRAM}
+          </Text>
+          <Text fill-black typography-align-right typography-settings-truncate typography-sm>
+            {PANGRAM}
+          </Text>
+          <Text fill-blue-600 typography-decoration-underline typography-settings-truncate typography-sm>
+            {PANGRAM}
+          </Text>
+        </Frame>
+        <Frame corner-radius-full fill-violet-200 padding-horizontal-2 padding-vertical-0p5 width-24>
+          <Text fill-violet-900 typography-settings-truncate typography-xs>
+            {PANGRAM}
+          </Text>
+        </Frame>
       </Section>
     </Frame>
   )

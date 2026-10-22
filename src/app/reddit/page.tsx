@@ -911,7 +911,7 @@ export default () => {
                   </Frame>
                   <Frame autolayout-vertical height-hug width-fill>
                     <Frame alignment-left autolayout-horizontal gap-1 height-hug width-hug>
-                      <Frame corner-radius-full fill-green-500 tailwind-animate-pulse height-2 width-2 />
+                      <Frame corner-radius-full fill-green-500 animate-pulse height-2 width-2 />
                       <Text fill-neutral-900 typography-base>
                         418
                       </Text>

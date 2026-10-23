@@ -7,6 +7,9 @@ const bakeBasePath = process.env.BAKE_BASE_PATH
 const nextConfig: NextConfig = {
   ...(bakeBasePath ? { output: "export", basePath: bakeBasePath, trailingSlash: true } : {}),
   reactCompiler: true,
+  experimental: {
+    agentUpgrade: "security",
+  },
   transpilePackages: ["react-native-svg"],
   turbopack: {
     // unison-components is a React Native library rendered on web through

@@ -1,6 +1,6 @@
 "use client"
 
-import { Frame, Text, Vector } from "@unison"
+import { Frame, Text, Vector } from "unison-components"
 
 // A look-alike of the r/artificial listing on Reddit, built only from Frame, Text and Vector flags.
 

@@ -8,7 +8,7 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css";
-@import "../../unison-components/dist/tailwind.css";
+@import "unison-components/tailwind.css";
 
 /* Colors from Sites/web's tailwind.config.ts that don't share a name with the library's tokens. Its black,
    white, gray, purple, red and orange scales are left out: declared after the library's tailwind.css they would

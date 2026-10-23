@@ -10,6 +10,7 @@
         "react-dom": "19.3.0",
         "react-native-svg": "^15.16.0",
         "react-native-web": "^0.21.4",
+        "unison-components": "^0.2.0",
       },
       "devDependencies": {
         "@biomejs/biome": "2.5.15",
@@ -684,6 +685,8 @@
     "ua-parser-js": ["ua-parser-js@1.0.41", "", { "bin": { "ua-parser-js": "script/cli.js" } }, "sha512-LbBDqdIC5s8iROCUjMbW1f5dJQTEFB1+KO9ogbvlb3nm9n4YHa5p4KTvFPWvh2Hs8gZMBuiB1/8+pdfe/tDPug=="],
 
     "undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
+
+    "unison-components": ["unison-components@0.2.0", "", { "peerDependencies": { "react": ">=19.3", "react-native": ">=0.87", "react-native-reanimated": ">=4", "react-native-svg": ">=15.15", "uniwind": ">=1.12" }, "optionalPeers": ["react-native-reanimated", "uniwind"] }, "sha512-YtfLY8RBhRG4qR0sutv5648FNsr2yaSKEnCln+ztfx2wTw0qRozj0Vi1l7C/I+ULjmZXAf0fKG2RrhWxJEKfEg=="],
 
     "unpipe": ["unpipe@1.0.0", "", {}, "sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ=="],
 

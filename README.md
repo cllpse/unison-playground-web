@@ -26,7 +26,6 @@ Part of [Unison](https://github.com/cllpse/unison), alongside
 ## Getting started
 
 ```sh
-git submodule update --init
 bun install
 bun dev
 ```
@@ -54,21 +53,21 @@ native render the same cases.
 
 ## How the components are wired in
 
-_./unison-components_ is the library as a git submodule. It is a React Native library rendered through React Native Web:
+The library is the [unison-components](https://www.npmjs.com/package/unison-components) npm package, a React Native
+library rendered through React Native Web:
 
-- `@unison` is a path alias in _tsconfig.json_ for _unison-components/dist/web_, which exports `Frame`, `Text` and
-  `Vector`. The native entry and shells are excluded from type checking.
+- `unison-components` exports `Frame`, `Text` and `Vector`; outside Metro it resolves to the web build.
 - _next.config.ts_ prefers `.web.*` files and aliases `react-native` to _src/react-native.ts_ (React Native Web plus
   stubs for native-only exports).
-- _src/app/globals.css_ imports the library's _dist/tailwind.css_, which carries the design tokens as Tailwind theme
-  values. It is generated and committed in the library, so there is no build step here.
+- _src/app/globals.css_ imports `unison-components/tailwind.css`, which carries the design tokens as Tailwind theme
+  values. It ships prebuilt in the package, so there is no build step here.
 
 Components use React context, so render them from a client component:
 
 ```tsx
 "use client"
 
-import { Frame, Text } from "@unison"
+import { Frame, Text } from "unison-components"
 
 export default function Page() {
   return (
@@ -81,10 +80,6 @@ export default function Page() {
 
 ### Updating the library
 
-While working on the library, `bun run components:sync-watch:playground-web` in the parent repository copies it into
-_./unison-components_ as you edit. To move the pinned commit:
-
-```sh
-git -C unison-components pull origin main
-git add unison-components
-```
+Pick up a new release with `bun update unison-components`. While working on the library,
+`bun run components:sync-watch:playground-web` in the parent [unison](https://github.com/cllpse/unison) repository
+builds it and copies it over the installed package as you edit; `bun install` puts the published package back.

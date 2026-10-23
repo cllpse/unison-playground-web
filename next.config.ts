@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   transpilePackages: ["react-native-svg"],
   turbopack: {
-    // The unison-components submodule is a React Native library rendered on web through
+    // unison-components is a React Native library rendered on web through
     // React Native Web: prefer `.web.*` files (react-native-svg's too, hence transpilePackages) and
     // swap `react-native` for a React Native Web shim with stubs for native-only exports.
     resolveExtensions: [

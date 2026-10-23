@@ -1,7 +1,7 @@
 "use client"
 
-import { Frame, Text, Vector } from "@unison"
 import type { ReactNode } from "react"
+import { Frame, Text, Vector } from "unison-components"
 
 // Keep these sections in step with unison-playground-expo/App.tsx so web and native render the same cases.
 

@@ -7,6 +7,8 @@ const bakeBasePath = process.env.BAKE_BASE_PATH
 const nextConfig: NextConfig = {
   ...(bakeBasePath ? { output: "export", basePath: bakeBasePath, trailingSlash: true } : {}),
   reactCompiler: true,
+  // No dev indicator (the "N" button bottom-left): it would sit over the suite's corner in dev mode.
+  devIndicators: false,
   experimental: {
     agentUpgrade: "security",
   },

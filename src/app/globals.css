@@ -9,6 +9,9 @@
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css";
 @import "unison-components/tailwind.css";
+/* Every class a flag can produce: the test pages render flags Tailwind can't find in their source (built in the
+   library at runtime), as the plugin's pasted code does too. */
+@import "unison-components/safelist.css";
 
 /* Colors from Sites/web's tailwind.config.ts that don't share a name with the library's tokens. Its black,
    white, gray, purple, red and orange scales are left out: declared after the library's tailwind.css they would
